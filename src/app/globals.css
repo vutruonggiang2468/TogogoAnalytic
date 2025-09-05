@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* =========================
+   CSS Variables (Light/Dark)
+========================= */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,8 +22,104 @@
   }
 }
 
+/* =========================
+   Body baseline (giữ nguyên)
+========================= */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Ensure global dark background to prevent white edges on mobile */
+html, body {
+  background-color: #0E1B36;
+  width: 100%;
+  max-width: 100vw; /* prevent accidental horizontal overflow */
+  overflow-x: hidden; /* disable horizontal scrolling on mobile */
+}
+
+/* iOS safe area helper to avoid top notch gap */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Improve Calendar text in mobile header (avoid overlapping) */
+@media (max-width: 640px) {
+  .header-mobile-date span {
+    font-size: 12px;
+    max-width: 60vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    line-height: 1;
+  }
+  /* Show short date, hide full date on very small screens */
+  .header-mobile-date .mobile-date-short { display: inline; }
+  .header-mobile-date span:last-child { display: none; }
+}
+
+@media (min-width: 640px) {
+  /* From sm and up: show full date, hide short date */
+  .header-mobile-date .mobile-date-short { display: none; }
+  .header-mobile-date span:last-child { display: inline; }
+}
+
+/* =========================
+   Marquee Animation (Hot News)
+   - Dùng kèm class bạn đã gán:
+     animate-marquee, animate-marquee-delay
+========================= */
+@keyframes marquee-x {
+  0%   { transform: translateX(0); }        /* hiển thị ngay từ đầu */
+  100% { transform: translateX(-100%); }    /* trượt hết chiều rộng nội dung */
+}
+
+/* Track chính */
+.animate-marquee {
+  animation: marquee-x 50s linear infinite;
+  will-change: transform;
+  width: max-content;    /* đảm bảo đo theo nội dung để trượt mượt */
+}
+
+/* Track thứ 2 chạy lệch nửa chu kỳ để nối liền mạch */
+.animate-marquee-delay {
+  animation: marquee-x 50s linear infinite;
+  animation-delay: -25s; /* nửa của 50s */
+  will-change: transform;
+  width: max-content;
+}
+
+/* Tôn trọng người dùng giảm chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-delay {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .item1 {grid-area: 1 / span 6;}
+  .item2 {grid-area: 2 / span 6;}
+  .item3 {grid-area: 3 / span 6;}
+  .item4 {grid-area: 4 / span 6;}
+  .item5 {grid-area: 5 / span 6;}
+}
+
+@media only screen and (min-width: 600px) {
+  .item1 {grid-area: 1 / span 6;}
+  .item2 {grid-area: 2 / span 1;}
+  .item3 {grid-area: 2 / span 4;}
+  .item4 {grid-area: 3 / span 6;}
+  .item5 {grid-area: 4 / span 6;}
+}
+
+@media only screen and (min-width: 768px) {
+  .item1 {grid-area: 1 / span 6;}
+  .item2 {grid-area: 2 / span 1;}
+  .item3 {grid-area: 2 / span 4;}
+  .item4 {grid-area: 2 / span 1;}
+  .item5 {grid-area: 3 / span 6;}
 }
