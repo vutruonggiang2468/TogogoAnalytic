@@ -31,31 +31,31 @@ interface TabsDetailProps {
 export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
   return (
     <Tabs defaultValue="overview" className="space-y-4">
-      <TabsList className="grid w-full grid-cols-4 bg-slate-800/60 border border-blue-400/30 p-1">
+      <TabsList className="w-full bg-slate-800/60 border border-blue-400/30 p-1 flex flex-nowrap gap-1 overflow-x-auto md:overflow-visible md:grid md:grid-cols-4">
         <TabsTrigger 
           value="overview" 
-          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
+          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-[11px] sm:text-xs py-1.5 px-2 whitespace-nowrap shrink-0 flex items-center gap-1"
         >
           <BarChart className="w-4 h-4 mr-1" />
           Tổng quan
         </TabsTrigger>
         <TabsTrigger 
           value="financials" 
-          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
+          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-[11px] sm:text-xs py-1.5 px-2 whitespace-nowrap shrink-0 flex items-center gap-1"
         >
           <DollarSign className="w-4 h-4 mr-1" />
           Tài chính
         </TabsTrigger>
         <TabsTrigger 
           value="governance" 
-          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
+          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-[11px] sm:text-xs py-1.5 px-2 whitespace-nowrap shrink-0 flex items-center gap-1"
         >
           <Users className="w-4 h-4 mr-1" />
           Quản trị
         </TabsTrigger>
         <TabsTrigger 
           value="analysis" 
-          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
+          className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-[11px] sm:text-xs py-1.5 px-2 whitespace-nowrap shrink-0 flex items-center gap-1"
         >
           <TrendingUpIcon className="w-4 h-4 mr-1" />
           Phân tích

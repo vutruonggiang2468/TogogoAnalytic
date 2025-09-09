@@ -81,11 +81,11 @@ export default function DetailedAnalysisPage({ stockCode, onBack }: DetailedAnal
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen" style={{ backgroundColor: '#0E1B36' }}>
+      <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: '#0E1B36' }}>
         <Header />
         
-        <div className="pt-16 md:pt-32">
-          <div className="container mx-auto px-4 py-6 max-w-7xl">
+        <div className="pt-20 md:pt-32">
+          <div className="container mx-auto px-4 py-6 max-w-full md:max-w-7xl">
             {/* Back Button */}
             <Button 
               onClick={onBack} 
