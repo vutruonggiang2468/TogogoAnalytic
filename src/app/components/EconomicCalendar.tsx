@@ -203,17 +203,17 @@ export function EconomicCalendar() {
               onClick={() => setSelectedDate(day.date)}
             >
               <div className="font-semibold mb-2">{day.day}</div>
-              <div className="space-y-1 text-[11px] sm:text-xs">
+              <div className="space-y-1 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 whitespace-nowrap">Economic</span>
+                  <span className="text-slate-400">Economic</span>
                   <span className={selectedDate === day.date ? 'text-white' : 'text-cyan-400'}>{day.economic}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 whitespace-nowrap">Earnings</span>
+                  <span className="text-slate-400">Earnings</span>
                   <span className={selectedDate === day.date ? 'text-white' : 'text-cyan-400'}>{day.earnings}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 whitespace-nowrap">Dividends</span>
+                  <span className="text-slate-400">Dividends</span>
                   <span className={selectedDate === day.date ? 'text-white' : 'text-cyan-400'}>{day.dividends}</span>
                 </div>
               </div>
@@ -222,12 +222,12 @@ export function EconomicCalendar() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 md:gap-2 mb-6 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-lg p-1 overflow-x-auto md:overflow-visible flex-nowrap">
+        <div className="flex flex-wrap items-center gap-1 md:gap-2 mb-6 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-lg p-1">
           {(['economic', 'earnings', 'revenue', 'dividends'] as const).map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all capitalize shrink-0 whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-all capitalize shrink-0 whitespace-nowrap ${
                 activeFilter === filter
                   ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                   : 'text-slate-300 hover:text-white hover:bg-slate-600/50'

@@ -9,10 +9,6 @@ import { ArrowLeft, Eye, EyeOff, Mail, Lock, Shield, TrendingUp, BarChart3, Spar
 
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
-interface LoginPageProps {
-  onBack: () => void;
-}
 
 export default function LoginPage() {
 
@@ -26,46 +22,29 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const handleGoogleLogin = async () => {
-      try {
-        // Gọi BE lấy URL đăng nhập Google
-        const { data } = await axios.get("http://127.0.0.1:8000/api/auth/google/auth-url");
-
-        if (data.auth_url) {
-          // Redirect sang Google
-          window.location.href = data.auth_url;
-        }
-      } catch (error) {
-        console.error("Lỗi khi lấy URL Google:", error);
-      };
-      // Simulate login process
-      setTimeout(() => {
-        setIsLoading(false);
-        // Here you would handle the actual login logic
-        console.log("Login attempt:", { email, password, rememberMe });
-      }, 2000);
-    };
-
+    // Simulate login process
+    setTimeout(() => {
+      setIsLoading(false);
+      console.log("Login attempt:", { email, password, rememberMe });
+    }, 1500);
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const { data } = await axios.get(`${API_BASE}/api/auth/google/auth-url`);
-      if (data.auth_url) {
-        window.location.href = data.auth_url;
-      }
-    } catch (error) {
-      console.error("Lỗi khi lấy URL Google:", error);
-    }
-  };
-
+  // removed unused handleGoogleLogin 
   // Wrapper with loading + basic error UX for Google sign-in
   const onGoogleClick = async () => {
     try {
       setIsGoogleLoading(true);
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/auth/google/auth-url`, { withCredentials: true });
-      if (data?.auth_url) {
-        window.location.assign(data.auth_url);
+      const resp = await axios.get(`http://127.0.0.1:8000/api/auth/google/auth-url`, { withCredentials: true });
+      
+      const url =
+        resp.data?.auth_url ||
+
+        resp.data?.authUrl ||
+        resp.data?.url ||
+        resp.data?.data?.auth_url ||
+        resp.data?.data?.authUrl;
+      if (url) {
+        window.location.assign(url); // save state for later verification
         return;
       }
       alert("Không lấy được URL đăng nhập Google. Vui lòng thử lại.");

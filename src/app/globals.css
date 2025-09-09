@@ -108,7 +108,7 @@ html, body {
   .item5 {grid-area: 5 / span 6;}
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 500px) {
   .item1 {grid-area: 1 / span 6;}
   .item2 {grid-area: 2 / span 1;}
   .item3 {grid-area: 2 / span 4;}

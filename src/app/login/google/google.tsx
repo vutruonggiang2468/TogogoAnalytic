@@ -9,23 +9,28 @@ export default function GoogleCallback() {
 
   useEffect(() => {
     const code = searchParams.get("code");
+    const state = searchParams.get("state");
     if (!code) return;
 
     (async () => {
       try {
-        const { data } = await axios.post(`http://127.0.0.1:8000/api/auth/google/auth-url`, { code });
+        const { data } = await axios.post(
+          "/api/auth/google/callback",
+          { code, state },
+          { withCredentials: true }
+        );
 
-        const token =
-          data?.token ||
+        const access_token =
+          data?.access_token ||
           data?.access_token ||
           data?.id_token ||
-          data?.data?.token ||
+          data?.data?.access_token ||
           data?.data?.access_token;
 
-        if (token) {
-          localStorage.setItem("token", token);
+        if (access_token) {
+          localStorage.setItem("token", access_token);
           try {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
           } catch {}
         }
 
@@ -39,4 +44,3 @@ export default function GoogleCallback() {
 
   return <p>Đang xử lý đăng nhập Google...</p>;
 }
-

@@ -13,6 +13,7 @@ import { TogogoTradingBotCompact } from "./components/TogogoTradingBotCompact";
 import { NewsColumns } from "./components/NewsColumns";
 import { EconomicCalendar } from "./components/EconomicCalendar";
 import { NewsSidebar } from "./components/NewsSidebar";
+import { DetailedAnalysisPage } from "./components/DetailedAnalysisPage";
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<"home" | "details" | "news-detail" | "deep-analysis">("home");

@@ -3,41 +3,38 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
-export default function GoogleCallbackPage() {
+export default function GoogleCallback() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const q = useSearchParams();
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    if (!code) return;
+    const code = q.get("code");
+    const state = q.get("state");
+    if (!code) { router.replace("/login"); return; }
 
     (async () => {
-      try {
-        const { data } = await axios.post(`/api/auth/google/callback`, { code });
+      const { data } = await axios.post(
+        "/api/auth/google/callback",
+        { code, state },
+        { withCredentials: true }
+      );
 
-        // Hỗ trợ nhiều kiểu phản hồi: {token}, {access_token}, {data: { token }}...
-        const token =
-          data?.token ||
-          data?.access_token ||
-          data?.id_token ||
-          data?.data?.token ||
-          data?.data?.access_token;
+      const access =
+        data?.access_token || 
+        data?.token || 
+        data?.id_token || 
+        data?.data?.access_token;
+      const refresh = data?.refresh_token || data?.data?.refresh_token;
 
-        if (token) {
-          localStorage.setItem("token", token);
-          try {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-          } catch {}
-        }
+      if (!access) throw new Error("Không nhận được access_token");
 
-        router.push("/");
-      } catch (error) {
-        console.error("Đăng nhập Google thất bại:", error);
-        router.push("/login");
-      }
-    })();
-  }, [searchParams, router]);
+      localStorage.setItem("access_token", access);
+      if (refresh) localStorage.setItem("refresh_token", refresh);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+      router.replace("/app");
+    })().catch(() => router.replace("/login?error=oauth_failed"));
+  }, [q, router]);
 
   return <p>Đang xử lý đăng nhập Google...</p>;
 }
-
