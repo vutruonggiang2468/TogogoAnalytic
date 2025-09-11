@@ -7,54 +7,55 @@ import { StockChart } from "..//../components/StockChart";
 import { ShareholderStructure } from "../../components/ShareholderStructure";
 import { Subsidiaries } from "../../components/Subsidiaries";
 import { calculateMarketPosition } from "../../components/helpers/detailedAnalysisHelpers";
-import { 
-  BarChart, 
-  DollarSign, 
-  Users, 
-  TrendingUpIcon, 
-  Building2, 
-  PieChart, 
-  Crown, 
-  Leaf, 
-  Shield, 
-  Target, 
-  Activity, 
-  LineChart, 
-  CheckCircle 
+import {
+  BarChart,
+  DollarSign,
+  Users,
+  TrendingUpIcon,
+  Building2,
+  PieChart,
+  Crown,
+  Leaf,
+  Shield,
+  Target,
+  Activity,
+  LineChart,
+  CheckCircle
 } from "lucide-react";
 
 interface TabsDetailProps {
   stock: any; // Replace with proper type based on getStockAnalysis return type
+  data: any;
   isPositive: boolean;
 }
 
-export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
+export default function TabsDetail({ stock, data, isPositive }: TabsDetailProps) {
   return (
     <Tabs defaultValue="overview" className="space-y-4">
       <TabsList className="grid w-full grid-cols-4 bg-slate-800/60 border border-blue-400/30 p-1">
-        <TabsTrigger 
-          value="overview" 
+        <TabsTrigger
+          value="overview"
           className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
         >
           <BarChart className="w-4 h-4 mr-1" />
           Tổng quan
         </TabsTrigger>
-        <TabsTrigger 
-          value="financials" 
+        <TabsTrigger
+          value="financials"
           className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
         >
           <DollarSign className="w-4 h-4 mr-1" />
           Tài chính
         </TabsTrigger>
-        <TabsTrigger 
-          value="governance" 
+        <TabsTrigger
+          value="governance"
           className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
         >
           <Users className="w-4 h-4 mr-1" />
           Quản trị
         </TabsTrigger>
-        <TabsTrigger 
-          value="analysis" 
+        <TabsTrigger
+          value="analysis"
           className="data-[state=active]:bg-blue-500/20 text-white data-[state=active]:text-cyan-400 text-xs py-2"
         >
           <TrendingUpIcon className="w-4 h-4 mr-1" />
@@ -66,7 +67,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
       <div className="w-full">
         <TabsContent value="overview" className="space-y-6 mt-0">
           {/* Stock Chart - Full Width */}
-          <StockChart 
+          <StockChart
             stockCode={stock.code}
             currentPrice={stock.currentPrice}
             change={stock.change}
@@ -81,49 +82,71 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <Building2 className="w-5 h-5" />
                 Thông tin doanh nghiệp
               </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-3">
                   <div className="p-3 bg-slate-700/30 rounded-lg">
                     <div className="text-xs text-slate-400">Tên đầy đủ</div>
-                    <div className="text-white">{stock.detailedInfo.companyOverview.fullName}</div>
+                    <div className="text-white">{data?.company.company_name}</div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 bg-slate-700/30 rounded-lg">
                       <div className="text-xs text-slate-400">Thành lập</div>
-                      <div className="text-white">{stock.detailedInfo.companyOverview.establishedYear}</div>
+                      <div className="text-white">
+                        {data?.company.history
+                          ? data.company.history.match(/\d{4}/)?.[0] //lấy năm đầu tiên trong chuỗi
+                          : '-'}
+                      </div>
                     </div>
-                    <div className="p-3 bg-slate-700/30 rounded-lg">
-                      <div className="text-xs text-slate-400">Niêm yết</div>
-                      <div className="text-white">{stock.detailedInfo.companyOverview.listing}</div>
-                    </div>
+                  </div>
+                  <div className="p-3 bg-slate-700/30 rounded-lg">
+                    <div className="text-xs text-slate-400">Hồ sơ doanh nghiệp</div>
+                    <div className="text-white text-sm leading-relaxed">{data?.company.company_profile}</div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="p-3 bg-slate-700/30 rounded-lg">
                     <div className="text-xs text-slate-400">Ngành</div>
-                    <div className="text-white">{stock.detailedInfo.companyOverview.industry}</div>
+                    <div className="text-white">{data?.company.industry}</div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 bg-slate-700/30 rounded-lg">
                       <div className="text-xs text-slate-400">Nhân viên</div>
-                      <div className="text-white">{stock.detailedInfo.companyOverview.employees}</div>
+                      <div className="text-white">{data?.company.no_employees}</div>
                     </div>
                     <div className="p-3 bg-slate-700/30 rounded-lg">
                       <div className="text-xs text-slate-400">Website</div>
-                      <div className="text-cyan-400 text-xs">{stock.detailedInfo.companyOverview.website}</div>
+                      <div className="text-cyan-400 text-xs">{data?.company.website}</div>
+                    </div>
+                    <div className="p-3 bg-slate-700/30 rounded-lg">
+                      <div className="text-xs text-slate-400">Sàn giao dịch</div>
+                      <div className="text-cyan-400 text-xs">{data?.exchange}</div>
+                    </div>
+                    <div className="p-3 bg-slate-700/30 rounded-lg">
+                      <div className="text-xs text-slate-400">Tổng số cổ phần phát hành</div>
+                      <div className="text-white">
+                        {data?.company.financial_ratio_issue_share
+                          ? `${Number(data.company.financial_ratio_issue_share).toLocaleString('vi-VN')} cổ phiếu`
+                          : '-'}
+                      </div>
+                    </div>
+                    <div className="p-3 bg-slate-700/30 rounded-lg">
+                      <div className="text-xs text-slate-400">Vốn điều lệ</div>
+                      <div className="text-white">
+                        {data?.company.charter_capital
+                          ? Number(data.company.charter_capital).toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          })
+                          : '-'}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <div className="p-3 bg-slate-700/30 rounded-lg">
+                  {/* <div className="p-3 bg-slate-700/30 rounded-lg">
                     <div className="text-xs text-slate-400">Trụ sở chính</div>
                     <div className="text-white">{stock.detailedInfo.companyOverview.headquarters}</div>
-                  </div>
-                  <div className="p-3 bg-slate-700/30 rounded-lg">
-                    <div className="text-xs text-slate-400">Hoạt động chính</div>
-                    <div className="text-white text-sm leading-relaxed">{stock.detailedInfo.businessActivities.mainBusiness}</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -148,7 +171,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <PieChart className="w-5 h-5" />
                 Phân khúc kinh doanh
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {stock.detailedInfo.businessSegments.map((segment: any, index: number) => (
                   <div key={index} className="p-4 bg-slate-700/30 rounded-lg">
@@ -189,7 +212,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <DollarSign className="w-5 h-5" />
                 Kết quả tài chính
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="p-4 bg-slate-700/30 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
@@ -200,7 +223,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                   </div>
                   <div className="text-2xl font-bold text-white">{stock.detailedInfo.financialHighlights.revenue}</div>
                 </div>
-                
+
                 <div className="p-4 bg-slate-700/30 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-slate-400 text-sm">Lợi nhuận ròng</span>
@@ -210,12 +233,12 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                   </div>
                   <div className="text-2xl font-bold text-emerald-400">{stock.detailedInfo.financialHighlights.netIncome}</div>
                 </div>
-                
+
                 <div className="p-4 bg-slate-700/30 rounded-lg">
                   <div className="text-slate-400 text-sm mb-2">Tổng tài sản</div>
                   <div className="text-2xl font-bold text-blue-400">{stock.detailedInfo.financialHighlights.totalAssets}</div>
                 </div>
-                
+
                 <div className="p-4 bg-slate-700/30 rounded-lg">
                   <div className="text-slate-400 text-sm mb-2">Biên lợi nhuận</div>
                   <div className="text-2xl font-bold text-purple-400">{stock.detailedInfo.financialHighlights.profitMargin}</div>
@@ -231,7 +254,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <LineChart className="w-5 h-5" />
                 Hiệu suất lịch sử
               </h3>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 {(Object.entries(stock.performance) as [string, string][]).map(([period, value]) => (
                   <div key={period} className="text-center p-3 bg-slate-700/30 rounded-lg">
@@ -249,7 +272,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
         <TabsContent value="governance" className="space-y-6 mt-0">
           {/* Shareholder Structure - Full Width */}
           <ShareholderStructure shareholderData={stock.detailedInfo.shareholderStructure} />
-          
+
           {/* Management Team - Full Width Grid */}
           <Card className="bg-slate-800/60 border border-blue-400/30">
             <CardContent className="p-6">
@@ -257,7 +280,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <Crown className="w-5 h-5" />
                 Ban lãnh đạo
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {stock.detailedInfo.managementTeam.map((member: any, index: number) => (
                   <div key={index} className="p-4 bg-slate-700/30 rounded-lg">
@@ -360,7 +383,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                 <div className="space-y-2">
                   <div className="relative">
                     <div className="h-2 bg-gradient-to-r from-red-400/30 via-yellow-400/30 to-emerald-400/30 rounded-full"></div>
-                    <div 
+                    <div
                       className="absolute top-0 h-2 w-1 bg-white rounded-full transform -translate-x-1/2"
                       style={{ left: `${calculateMarketPosition(stock.currentPrice, stock.additionalMetrics.week52Low, stock.additionalMetrics.week52High)}%` }}
                     ></div>
@@ -382,15 +405,14 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
               <h3 className="text-xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                 <Target className="w-5 h-5" />
                 Khuyến nghị đầu tư
-                <Badge className={`${
-                  stock?.detailedInfo.investment.recommendation === "MUA MẠNH" ? "bg-emerald-500" :
+                <Badge className={`${stock?.detailedInfo.investment.recommendation === "MUA MẠNH" ? "bg-emerald-500" :
                   stock?.detailedInfo.investment.recommendation === "MUA" ? "bg-blue-500" :
-                  "bg-yellow-500"
-                } text-white`}>
+                    "bg-yellow-500"
+                  } text-white`}>
                   {stock?.detailedInfo.investment.recommendation}
                 </Badge>
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="text-center p-4 bg-gradient-to-br from-slate-700/30 to-emerald-500/20 rounded-lg">
                   <div className="text-sm text-slate-400 mb-1">Mục tiêu giá</div>
@@ -404,7 +426,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                   <div className="text-slate-400 text-sm mb-2">Khung thời gian</div>
                   <div className="font-semibold text-white text-lg">{stock?.detailedInfo.investment.timeHorizon}</div>
                 </div>
-                
+
                 <div className="p-4 bg-slate-700/30 rounded-lg">
                   <div className="text-slate-400 text-sm mb-2">Luận điểm đầu tư:</div>
                   <div className="space-y-2">
@@ -430,7 +452,7 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                   {stock?.detailedInfo.analystConsensus.totalAnalysts} chuyên gia
                 </Badge>
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-slate-700/30 rounded-lg">
                   <div className="text-sm text-slate-400 mb-1">Mục tiêu giá TB</div>
@@ -439,17 +461,17 @@ export default function TabsDetail({ stock, isPositive }: TabsDetailProps) {
                     {stock.detailedInfo.analystConsensus.priceTargetLow} - {stock.detailedInfo.analystConsensus.priceTargetHigh}
                   </div>
                 </div>
-                
+
                 <div className="p-3 bg-emerald-500/20 rounded-lg text-center">
                   <div className="text-emerald-400 text-sm">Mua mạnh</div>
                   <div className="text-emerald-400 font-bold text-xl">{stock.detailedInfo.analystConsensus.strongBuy}</div>
                 </div>
-                
+
                 <div className="p-3 bg-blue-500/20 rounded-lg text-center">
                   <div className="text-blue-400 text-sm">Mua</div>
                   <div className="text-blue-400 font-bold text-xl">{stock.detailedInfo.analystConsensus.buy}</div>
                 </div>
-                
+
                 <div className="p-3 bg-yellow-500/20 rounded-lg text-center">
                   <div className="text-yellow-400 text-sm">Giữ</div>
                   <div className="text-yellow-400 font-bold text-xl">{stock.detailedInfo.analystConsensus.hold}</div>

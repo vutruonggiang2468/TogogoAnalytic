@@ -31,7 +31,7 @@ interface QuickAnalysisProps {
 // Stock data with detailed information
 const stockData = [
   {
-    code: "VCB",
+    code: " YTC",
     name: "Vietcombank",
     price: "95.8",
     change: "+2.1",
@@ -265,7 +265,7 @@ const getRecommendationIcon = (rec: string) => {
 };
 
 export function QuickAnalysis({ onViewDetails }: QuickAnalysisProps) {
-  const [selectedStock, setSelectedStock] = useState("VCB");
+  const [selectedStock, setSelectedStock] = useState("YTC");
   const [activeTab, setActiveTab] = useState("overview");
 
   const selectedData = stockData.find(stock => stock.code === selectedStock) || stockData[0];

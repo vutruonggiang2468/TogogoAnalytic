@@ -257,7 +257,7 @@ export function NewsDetailPage({ articleId, onBack, onViewDetails }: NewsDetailP
                         variant="outline" 
                         className="text-blue-600 border-blue-200 hover:bg-blue-50 cursor-pointer"
                         onClick={() => {
-                          if (['VCB', 'TCB', 'ACB', 'HPG'].includes(tag)) {
+                          if (['YTC', 'TCB', 'ACB', 'HPG'].includes(tag)) {
                             onViewDetails(tag);
                           }
                         }}
@@ -435,7 +435,7 @@ export function NewsDetailPage({ articleId, onBack, onViewDetails }: NewsDetailP
                     variant="outline" 
                     size="sm" 
                     className="w-full"
-                    onClick={() => onViewDetails('VCB')}
+                    onClick={() => onViewDetails('YTC')}
                   >
                     Xem phân tích chi tiết
                   </Button>

@@ -39,43 +39,43 @@ interface DeepAnalysisPageProps {
 // Mock comprehensive stock data
 const getStockData = (code: string) => ({
   code,
-  name: code === "VCB" ? "Ngân hàng TMCP Ngoại thương Việt Nam" : 
+  name: code === "YTC" ? "Ngân hàng TMCP Ngoại thương Việt Nam" : 
         code === "TCB" ? "Ngân hàng TMCP Kỹ thương Việt Nam" :
         code === "HPG" ? "Tập đoàn Hoa Phát" : 
         code === "MSN" ? "Tập đoàn Masan" :
         "Công ty Cổ phần " + code,
-  sector: code.includes("VCB") || code.includes("TCB") ? "Ngân hàng" : 
+  sector: code.includes("YTC") || code.includes("TCB") ? "Ngân hàng" : 
           code === "HPG" ? "Thép" : code === "MSN" ? "Tiêu dùng" : "Công nghiệp",
-  currentPrice: code === "VCB" ? "95,800" : code === "TCB" ? "23,400" : code === "HPG" ? "24,600" : "67,300",
-  change: code === "VCB" ? "+2,100" : code === "TCB" ? "+700" : code === "HPG" ? "+1,200" : "+500",
-  changePercent: code === "VCB" ? "+2.24%" : code === "TCB" ? "+3.08%" : code === "HPG" ? "+5.13%" : "+0.75%",
+  currentPrice: code === "YTC" ? "95,800" : code === "TCB" ? "23,400" : code === "HPG" ? "24,600" : "67,300",
+  change: code === "YTC" ? "+2,100" : code === "TCB" ? "+700" : code === "HPG" ? "+1,200" : "+500",
+  changePercent: code === "YTC" ? "+2.24%" : code === "TCB" ? "+3.08%" : code === "HPG" ? "+5.13%" : "+0.75%",
   
   // Company Information
   companyInfo: {
-    fullName: code === "VCB" ? "Ngân hàng Thương mại Cổ phần Ngoại thương Việt Nam" :
+    fullName: code === "YTC" ? "Ngân hàng Thương mại Cổ phần Ngoại thương Việt Nam" :
               code === "TCB" ? "Ngân hàng Thương mại Cổ phần Kỹ thương Việt Nam" :
               code === "HPG" ? "Tập đoàn Công nghiệp Hoa Phát" :
               "Tập đoàn " + code,
-    industry: code.includes("VCB") || code.includes("TCB") ? "Dịch vụ tài chính - Ngân hàng" : 
+    industry: code.includes("YTC") || code.includes("TCB") ? "Dịch vụ tài chính - Ngân hàng" : 
               code === "HPG" ? "Sản xuất - Kim loại cơ bản" : "Sản xuất - Tiêu dùng",
-    establishedYear: code === "VCB" ? "1963" : code === "TCB" ? "1993" : code === "HPG" ? "1992" : "1996",
-    headquarters: code === "VCB" ? "Hà Nội" : code === "TCB" ? "TP.HCM" : code === "HPG" ? "Hà Nội" : "TP.HCM",
-    employees: code === "VCB" ? "25,000+" : code === "TCB" ? "18,000+" : code === "HPG" ? "35,000+" : "12,000+",
-    website: code === "VCB" ? "vietcombank.com.vn" : code === "TCB" ? "techcombank.com.vn" : code === "HPG" ? "hoaphat.com.vn" : code.toLowerCase() + ".com.vn",
+    establishedYear: code === "YTC" ? "1963" : code === "TCB" ? "1993" : code === "HPG" ? "1992" : "1996",
+    headquarters: code === "YTC" ? "Hà Nội" : code === "TCB" ? "TP.HCM" : code === "HPG" ? "Hà Nội" : "TP.HCM",
+    employees: code === "YTC" ? "25,000+" : code === "TCB" ? "18,000+" : code === "HPG" ? "35,000+" : "12,000+",
+    website: code === "YTC" ? "vietcombank.com.vn" : code === "TCB" ? "techcombank.com.vn" : code === "HPG" ? "hoaphat.com.vn" : code.toLowerCase() + ".com.vn",
     
     // Shareholders structure
     majorShareholders: [
-      { name: "Nhà nước", percent: code === "VCB" ? "74.8%" : code === "TCB" ? "0%" : code === "HPG" ? "0%" : "15.2%" },
-      { name: "Khối ngoại", percent: code === "VCB" ? "18.7%" : code === "TCB" ? "35.8%" : code === "HPG" ? "22.4%" : "28.9%" },
-      { name: "Cổ đông khác", percent: code === "VCB" ? "6.5%" : code === "TCB" ? "64.2%" : code === "HPG" ? "77.6%" : "55.9%" }
+      { name: "Nhà nước", percent: code === "YTC" ? "74.8%" : code === "TCB" ? "0%" : code === "HPG" ? "0%" : "15.2%" },
+      { name: "Khối ngoại", percent: code === "YTC" ? "18.7%" : code === "TCB" ? "35.8%" : code === "HPG" ? "22.4%" : "28.9%" },
+      { name: "Cổ đông khác", percent: code === "YTC" ? "6.5%" : code === "TCB" ? "64.2%" : code === "HPG" ? "77.6%" : "55.9%" }
     ],
     
     // Business overview
-    mainBusiness: code === "VCB" ? "Cung cấp dịch vụ ngân hàng bán lẻ và doanh nghiệp" :
+    mainBusiness: code === "YTC" ? "Cung cấp dịch vụ ngân hàng bán lẻ và doanh nghiệp" :
                   code === "TCB" ? "Dịch vụ ngân hàng số và tài chính hiện đại" :
                   code === "HPG" ? "Sản xuất thép và vật liệu xây dựng" :
                   "Sản xuất và phân phối hàng tiêu dùng",
-    competitiveAdvantage: code === "VCB" ? "Thương hiệu mạnh, mạng lưới rộng khắp" :
+    competitiveAdvantage: code === "YTC" ? "Thương hiệu mạnh, mạng lưới rộng khắp" :
                          code === "TCB" ? "Công nghệ tiên tiến, dịch vụ số hóa" :
                          code === "HPG" ? "Công suất lớn, tích hợp dọc" :
                          "Thương hiệu nổi tiếng, kênh phân phối rộng"
@@ -83,50 +83,50 @@ const getStockData = (code: string) => ({
 
   // Bot trading data (premium)
   botTrading: {
-    winRate: code === "VCB" ? "73%" : code === "TCB" ? "78%" : code === "HPG" ? "81%" : "69%",
-    avgReturn: code === "VCB" ? "+2.8%" : code === "TCB" ? "+3.4%" : code === "HPG" ? "+4.1%" : "+2.3%",
-    sharpeRatio: code === "VCB" ? "1.42" : code === "TCB" ? "1.67" : code === "HPG" ? "1.89" : "1.23",
-    maxDrawdown: code === "VCB" ? "-8.5%" : code === "TCB" ? "-12.3%" : code === "HPG" ? "-15.1%" : "-9.8%",
+    winRate: code === "YTC" ? "73%" : code === "TCB" ? "78%" : code === "HPG" ? "81%" : "69%",
+    avgReturn: code === "YTC" ? "+2.8%" : code === "TCB" ? "+3.4%" : code === "HPG" ? "+4.1%" : "+2.3%",
+    sharpeRatio: code === "YTC" ? "1.42" : code === "TCB" ? "1.67" : code === "HPG" ? "1.89" : "1.23",
+    maxDrawdown: code === "YTC" ? "-8.5%" : code === "TCB" ? "-12.3%" : code === "HPG" ? "-15.1%" : "-9.8%",
     signals: [
-      { date: "25/08/2025", action: "MUA", price: code === "VCB" ? "92,500" : "22,100", result: "+3.2%" },
-      { date: "23/08/2025", action: "BÁN", price: code === "VCB" ? "95,100" : "23,800", result: "+2.8%" },
-      { date: "20/08/2025", action: "MUA", price: code === "VCB" ? "89,200" : "21,500", result: "+6.4%" }
+      { date: "25/08/2025", action: "MUA", price: code === "YTC" ? "92,500" : "22,100", result: "+3.2%" },
+      { date: "23/08/2025", action: "BÁN", price: code === "YTC" ? "95,100" : "23,800", result: "+2.8%" },
+      { date: "20/08/2025", action: "MUA", price: code === "YTC" ? "89,200" : "21,500", result: "+6.4%" }
     ]
   },
 
   // Detailed analysis (premium)
   detailedAnalysis: {
-    fundamentalScore: code === "VCB" ? 85 : code === "TCB" ? 88 : code === "HPG" ? 82 : 78,
-    technicalScore: code === "VCB" ? 78 : code === "TCB" ? 85 : code === "HPG" ? 89 : 72,
-    overallRating: code === "VCB" ? "MUA" : code === "TCB" ? "MUA MẠNH" : code === "HPG" ? "MUA MẠNH" : "GIỮ",
+    fundamentalScore: code === "YTC" ? 85 : code === "TCB" ? 88 : code === "HPG" ? 82 : 78,
+    technicalScore: code === "YTC" ? 78 : code === "TCB" ? 85 : code === "HPG" ? 89 : 72,
+    overallRating: code === "YTC" ? "MUA" : code === "TCB" ? "MUA MẠNH" : code === "HPG" ? "MUA MẠNH" : "GIỮ",
     
     // Quarter analysis
     quarterAnalysis: {
       q4_2024: {
-        revenue: code === "VCB" ? "78.5T" : code === "TCB" ? "56.8T" : code === "HPG" ? "156.7T" : "89.4T",
-        profit: code === "VCB" ? "24.8T" : code === "TCB" ? "19.2T" : code === "HPG" ? "8.5T" : "3.2T",
-        growth: code === "VCB" ? "+18.5%" : code === "TCB" ? "+22.1%" : code === "HPG" ? "+28.9%" : "+12.4%"
+        revenue: code === "YTC" ? "78.5T" : code === "TCB" ? "56.8T" : code === "HPG" ? "156.7T" : "89.4T",
+        profit: code === "YTC" ? "24.8T" : code === "TCB" ? "19.2T" : code === "HPG" ? "8.5T" : "3.2T",
+        growth: code === "YTC" ? "+18.5%" : code === "TCB" ? "+22.1%" : code === "HPG" ? "+28.9%" : "+12.4%"
       },
       forecast_q1_2025: {
-        expectedGrowth: code === "VCB" ? "+15-20%" : code === "TCB" ? "+20-25%" : code === "HPG" ? "+25-30%" : "+10-15%",
+        expectedGrowth: code === "YTC" ? "+15-20%" : code === "TCB" ? "+20-25%" : code === "HPG" ? "+25-30%" : "+10-15%",
         riskFactors: ["Lãi suất", "Tăng trưởng GDP", "Chính sách tiền tệ"]
       }
     },
 
     // VN-Index & VN30 analysis
     marketAnalysis: {
-      vnIndexCorrelation: code === "VCB" ? "0.87" : code === "TCB" ? "0.82" : code === "HPG" ? "0.91" : "0.75",
-      vn30Impact: code === "VCB" ? "Cao" : code === "TCB" ? "Cao" : code === "HPG" ? "Trung bình" : "Thấp",
-      marketOutperformance: code === "VCB" ? "+5.2%" : code === "TCB" ? "+8.9%" : code === "HPG" ? "+12.1%" : "+2.8%"
+      vnIndexCorrelation: code === "YTC" ? "0.87" : code === "TCB" ? "0.82" : code === "HPG" ? "0.91" : "0.75",
+      vn30Impact: code === "YTC" ? "Cao" : code === "TCB" ? "Cao" : code === "HPG" ? "Trung bình" : "Thấp",
+      marketOutperformance: code === "YTC" ? "+5.2%" : code === "TCB" ? "+8.9%" : code === "HPG" ? "+12.1%" : "+2.8%"
     }
   }
 });
 
-const searchSuggestions = ["VCB", "TCB", "HPG", "MSN", "VHM", "VIC", "GAS", "SAB", "VNM", "ACB"];
+const searchSuggestions = ["YTC", "TCB", "HPG", "MSN", "VHM", "VIC", "GAS", "SAB", "VNM", "ACB"];
 
 export function DeepAnalysisPage({ onBack }: DeepAnalysisPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedStock, setSelectedStock] = useState("VCB");
+  const [selectedStock, setSelectedStock] = useState("YTC");
   const [hasBasicSubscription, setHasBasicSubscription] = useState(false);
   const [hasPremiumSubscription, setHasPremiumSubscription] = useState(false);
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);

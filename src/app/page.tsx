@@ -1,6 +1,7 @@
 'use client'
 import Image from "next/image";
 import { useState } from "react";
+import { useEffect } from "react";
 // import { DetailedAnalysisPage } from "./viewdetails/components/DetailedAnalysisPage";
 import { Badge } from "./components/ui/badge";
 import { Card, CardContent } from "./components/ui/card";
@@ -19,6 +20,19 @@ export default function Home() {
   const [currentView, setCurrentView] = useState<"home" | "details" | "news-detail" | "deep-analysis">("home");
   const [selectedStock, setSelectedStock] = useState<string>("");
   const [selectedArticle, setSelectedArticle] = useState<number>(1);
+
+  const [time, setTime] = useState(new Date());
+  const formattedTime = time.toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer); 
+  }, []);
 
   const handleViewDetails = (stockCode: string) => {
     setSelectedStock(stockCode);
@@ -103,7 +117,7 @@ export default function Home() {
 
                 </div>
                 <div className="text-sm text-slate-400 w-full sm:w-auto mt-2 sm:mt-0">
-                  Cập nhật lần cuối: 14:32 hôm nay
+                  Cập nhật lần cuối: {formattedTime} hôm nay
                 </div>
               </div>
               <QuickAnalysis onViewDetails={handleViewDetails} />
@@ -257,7 +271,7 @@ export default function Home() {
                           <div className="bg-gradient-to-br from-slate-700/40 to-slate-600/40 rounded-xl p-6 border border-blue-400/20">
                             <div className="space-y-3">
                               <div className="flex items-center justify-between">
-                                <span className="text-slate-300">VCB</span>
+                                <span className="text-slate-300">YTC</span>
                                 <span className="text-emerald-400 font-semibold">+2.4%</span>
                               </div>
                               <div className="flex items-center justify-between">
@@ -387,3 +401,7 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+

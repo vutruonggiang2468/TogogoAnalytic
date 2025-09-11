@@ -22,6 +22,9 @@ import {
 } from "lucide-react";
 
 
+import { getProfile } from "@/lib/api";
+import { useRouter } from "next/navigation";
+
 import Link from "next/link";
 
 export function Header() {
@@ -31,6 +34,23 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [now, setNow] = useState(new Date());
+//Hiện mail
+  // const [userEmail, setUserEmail] = useState<string | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   getProfile()
+  //     .then((data) => {
+  //       setUserEmail(data.email);
+  //       setLoading(false);
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //       router.replace("/login"); // ✅ Không gây lỗi NextRouter
+  //     });
+  // }, [router]);
 
 
   // Handle scroll to show/hide header
@@ -52,9 +72,20 @@ export function Header() {
       setLastScrollY(currentScrollY);
     };
 
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60_000); // update mỗi phút
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatted = now.toLocaleDateString("vi-VN", {
+    weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
+  });
 
   const navigationItems = [
     { label: "TRANG CHỦ", href: "#", isActive: true, icon: <Globe className="w-4 h-4" /> },
@@ -192,10 +223,10 @@ export function Header() {
             {/* Right side - Enhanced */}
             <div className="flex items-center space-x-4">
               {/* Market Summary - Enhanced */}
-              <div className="hidden lg:flex items-center space-x-6 text-sm">
+              <div className="hidden lg:flex items-center space-x-6 text-sm"> 
                 <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg border border-blue-400/20">
                   <Calendar className="w-4 h-4 text-cyan-400" />
-                  <span className="text-slate-300">Thứ 2, 25/08/2025</span>
+                  <span className="text-slate-300 capitalize">{formatted}</span>
                 </div>
                 <div className="text-slate-600">|</div>
                 <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg border border-emerald-400/30">
@@ -230,9 +261,13 @@ export function Header() {
                     <User className="w-4 h-4" />
                     {/* <ChevronDown className="w-3 h-3 ml-1" /> */}
                   </Button>
+                  {/* {userEmail && (
+                    <span className="ml-2 hidden md:inline text-xs text-slate-300 truncate max-w-[180px] align-middle">{userEmail}</span>
+                  )} */}
 
                   {/* Profile Dropdown - Enhanced */}
                   {isProfileMenuOpen && (
+
                     <div className="absolute right-0 top-full mt-2 w-48 bg-gradient-to-br from-slate-800 to-slate-700 border border-blue-400/30 rounded-lg shadow-xl py-2 z-50 backdrop-blur-sm">
                       <Link
                         href="/login"
@@ -243,8 +278,10 @@ export function Header() {
                       <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Đăng ký</a>
                       <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Cài đặt</a>
                       <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Trợ giúp</a>
+                      {/* {userEmail && (<a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">{userEmail}</a>)} */}
                     </div>
                   )}
+
                 </div>
 
                 {/* Mobile menu button - Enhanced */}
@@ -289,7 +326,7 @@ export function Header() {
                     <Input
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder={`Tìm kiếm ${activeSearchFilter.toLowerCase()}... (VD: VCB, HPG, tin tức ngân hàng)`}
+                      placeholder={`Tìm kiếm ${activeSearchFilter.toLowerCase()}... (VD: YTC, HPG, tin tức ngân hàng)`}
                       className="pl-12 pr-20 py-3 text-base bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-0 rounded-xl shadow-sm focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-0 transition-all text-white placeholder-slate-400"
                     />
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -319,7 +356,7 @@ export function Header() {
                       <>
                         <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
                           <BarChart3 className="w-4 h-4 text-blue-400" />
-                          <span className="text-sm text-slate-300">VCB - Vietcombank</span>
+                          <span className="text-sm text-slate-300">YTC - Vietcombank</span>
                           <span className="text-xs text-slate-500 ml-auto">Cổ phiếu</span>
                         </div>
                         <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
