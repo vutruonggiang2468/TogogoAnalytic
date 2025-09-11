@@ -30,7 +30,7 @@ const botSuggestions = [
     name: "Momentum Hunter Bot",
     icon: <Rocket className="w-5 h-5" />,
     description: "Săn lùng cổ phiếu có momentum mạnh",
-    picks: ["HPG", "TCB", "VCB"],
+    picks: ["HPG", "TCB", "YTC"],
     performance: "+18.4%",
     confidence: 89,
     timeframe: "1-2 tuần",
@@ -54,7 +54,7 @@ const botSuggestions = [
     name: "Dividend Collector Bot",
     icon: <BarChart3 className="w-5 h-5" />,
     description: "Thu thập cổ tức ổn định cao",
-    picks: ["GAS", "VCB", "TCB"],
+    picks: ["GAS", "YTC", "TCB"],
     performance: "+9.8%",
     confidence: 92,
     timeframe: "3-6 tháng",
@@ -88,7 +88,7 @@ const botSuggestions = [
 ];
 
 const stockOptions = [
-  { code: "VCB", name: "Vietcombank", sector: "Banking" },
+  { code: "YTC", name: "Vietcombank", sector: "Banking" },
   { code: "TCB", name: "Techcombank", sector: "Banking" },
   { code: "HPG", name: "Hoa Phat Group", sector: "Steel" },
   { code: "MSN", name: "Masan Group", sector: "Consumer" },
@@ -100,7 +100,7 @@ const stockOptions = [
 
 export function TogogoTradingBotCompact({ onViewDetails }: TogogoTradingBotCompactProps) {
   const [selectedBot, setSelectedBot] = useState(0);
-  const [selectedStock, setSelectedStock] = useState("VCB");
+  const [selectedStock, setSelectedStock] = useState("YTC");
   
   const currentBot = botSuggestions[selectedBot];
 

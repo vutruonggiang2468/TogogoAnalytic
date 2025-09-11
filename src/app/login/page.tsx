@@ -34,7 +34,7 @@ export default function LoginPage() {
   const onGoogleClick = async () => {
     try {
       setIsGoogleLoading(true);
-      const resp = await axios.get(`http://127.0.0.1:8000/api/auth/google/auth-url`, { withCredentials: true });
+      const resp = await axios.get(`http://localhost:8000/api/auth/google/auth-url`, { withCredentials: true });
       
       const url =
         resp.data?.auth_url ||

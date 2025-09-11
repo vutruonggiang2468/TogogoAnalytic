@@ -32,7 +32,7 @@ export default function DetailedAnalysisPage({ stockCode, onBack }: DetailedAnal
   const [data, setData] = useState<SymbolData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { symbol } = useParams<{ symbol: string }>(); // 👉 symbol = "VCB"
+  const { slug } = useParams<{ slug: string }>();
 
   useEffect(() => {
 
@@ -40,7 +40,8 @@ export default function DetailedAnalysisPage({ stockCode, onBack }: DetailedAnal
       setLoading(true); 
       setError(null);
       try {
-        const response = await apiGetSymbolData(stockCode);
+        // const response = await apiGetSymbolData(slug);
+        const response = await apiGetSymbolData("YTC");
         setData(response);
         console.log("Data fetched:", response);
       }
@@ -57,7 +58,7 @@ export default function DetailedAnalysisPage({ stockCode, onBack }: DetailedAnal
 
   console.log("Data:", data);
   
-
+  
   // Filter search suggestions
   const filteredSuggestions = searchSuggestions.filter(s => 
     s.toLowerCase().includes(searchQuery.toLowerCase())
@@ -191,7 +192,7 @@ export default function DetailedAnalysisPage({ stockCode, onBack }: DetailedAnal
             </div>
 
             {/* Tabs Detail Component */}
-            <TabsDetail stock={stock} isPositive={isPositive} />
+            <TabsDetail stock={stock} data={data} isPositive={isPositive} />
           </div>
         </div>
       </div>

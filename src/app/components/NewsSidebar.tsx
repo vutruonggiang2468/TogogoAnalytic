@@ -121,7 +121,7 @@ export function NewsSidebar({ onViewDetails }: NewsSidebarProps) {
             variant="outline" 
             size="sm" 
             className="w-full mt-3 border-blue-400/30 text-slate-300 hover:bg-blue-500/20 hover:text-white hover:border-blue-400/50"
-            onClick={() => onViewDetails('VCB')}
+            onClick={() => onViewDetails('YTC')}
           >
             Xem phân tích chi tiết
           </Button>
