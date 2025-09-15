@@ -1,6 +1,7 @@
-'use client'
+"use client";
+
 import { useState, useEffect } from "react";
-import { Badge } from "./ui/bagde";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -17,14 +18,7 @@ import {
   Bot,
   Settings,
   ChevronDown,
-  Filter,
-
 } from "lucide-react";
-
-
-import { getProfile } from "@/lib/api";
-import { useRouter } from "next/navigation";
-
 import Link from "next/link";
 
 export function Header() {
@@ -34,24 +28,6 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [now, setNow] = useState(new Date());
-//Hiện mail
-  // const [userEmail, setUserEmail] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(true);
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   getProfile()
-  //     .then((data) => {
-  //       setUserEmail(data.email);
-  //       setLoading(false);
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //       router.replace("/login"); // ✅ Không gây lỗi NextRouter
-  //     });
-  // }, [router]);
-
 
   // Handle scroll to show/hide header
   useEffect(() => {
@@ -72,55 +48,73 @@ export function Header() {
       setLastScrollY(currentScrollY);
     };
 
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 60_000); // update mỗi phút
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatted = now.toLocaleDateString("vi-VN", {
-    weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
-  });
-
   const navigationItems = [
-    { label: "TRANG CHỦ", href: "#", isActive: true, icon: <Globe className="w-4 h-4" /> },
-    { label: "THỊ TRƯỜNG", href: "#", icon: <BarChart3 className="w-4 h-4" /> },
-    { label: "DOANH NGHIỆP", href: "#", icon: <Newspaper className="w-4 h-4" /> },
-    { label: "KINH TẾ", href: "#", icon: <TrendingUp className="w-4 h-4" /> },
-    { label: "CHÍNH SÁCH", href: "#", icon: <Settings className="w-4 h-4" /> },
-    { label: "PHÂN TÍCH", href: "#", icon: <BarChart3 className="w-4 h-4" /> },
-    { label: "AI TRADING", href: "#", icon: <Bot className="w-4 h-4" /> }
+    {
+      label: "TRANG CHỦ",
+      href: "#",
+      isActive: true,
+      icon: <Globe className="w-4 h-4" />,
+    },
+    {
+      label: "THỊ TRƯỜNG",
+      href: "#",
+      icon: <BarChart3 className="w-4 h-4" />,
+    },
+    {
+      label: "DOANH NGHIỆP",
+      href: "#",
+      icon: <Newspaper className="w-4 h-4" />,
+    },
+    {
+      label: "KINH TẾ",
+      href: "#",
+      icon: <TrendingUp className="w-4 h-4" />,
+    },
+    {
+      label: "CHÍNH SÁCH",
+      href: "#",
+      icon: <Settings className="w-4 h-4" />,
+    },
+    {
+      label: "PHÂN TÍCH",
+      href: "#",
+      icon: <BarChart3 className="w-4 h-4" />,
+    },
+    {
+      label: "AI TRADING",
+      href: "#",
+      icon: <Bot className="w-4 h-4" />,
+    },
   ];
 
   const searchFilters = [
-    { label: "Tổng quan", icon: <BarChart3 className="w-4 h-4" /> },
-    { label: "Kỹ thuật", icon: <TrendingUp className="w-4 h-4" /> },
-    { label: "Tin tức", icon: <Newspaper className="w-4 h-4" /> }
+    {
+      label: "Tổng quan",
+      icon: <BarChart3 className="w-4 h-4" />,
+    },
+    {
+      label: "Kỹ thuật",
+      icon: <TrendingUp className="w-4 h-4" />,
+    },
+    {
+      label: "Tin tức",
+      icon: <Newspaper className="w-4 h-4" />,
+    },
   ];
-
-
 
   const breakingNews = [
     "🔥 VN-Index vượt mốc 1,280 điểm trong phiên chiều",
     "📈 Khối ngoại mua ròng 500 tỷ đồng",
     "💰 Cổ phiếu ngân hàng tăng mạnh",
     "⚡ HPG công bố kết quả kinh doanh vượt kỳ vọng",
-    "🏆 TCB đạt ROE cao nhất ngành ngân hàng"
+    "🏆 TCB đạt ROE cao nhất ngành ngân hàng",
   ];
-
-  // Override with clean Vietnamese strings (fix encoding/spacing)
-  /* breakingNews = [
-    "VN-Index vượt mốc 1.280 điểm trong phiên chiều",
-    "Khối ngoại mua ròng 500 tỷ đồng",
-    "Cổ phiếu ngân hàng tăng mạnh",
-    "HPG công bố kết quả kinh doanh vượt kỳ vọng",
-    "TCB đạt ROE cao nhất ngành ngân hàng"
-  ]; */
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,292 +123,189 @@ export function Header() {
   };
 
   return (
-    <header className={`bg-gradient-to-r from-slate-800/90 to-slate-700/90 border-b border-blue-400/20 fixed top-0 left-0 right-0 z-50 shadow-lg backdrop-blur-sm transition-transform duration-300 ease-in-out safe-area-top ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}>
-      {/* Breaking News Ticker - Enhanced (hidden on small screens for responsiveness) */}
-      <div className="hidden md:block bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 text-white py-2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-cyan-600/20 to-teal-600/20 animate-pulse"></div>
+    <header
+      className={`bg-gray-900/95 border-b border-gray-600/30 fixed top-0 left-0 right-0 z-50 shadow-xl backdrop-blur-md transition-transform duration-300 ease-in-out ${
+        isHeaderVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      {/* Breaking News Ticker - Enhanced */}
+      <div className="bg-blue-600 text-white py-2 relative overflow-hidden">
+        <div className="absolute inset-0 bg-blue-600/10 animate-pulse"></div>
         <div className="container mx-auto px-4 relative">
           <div className="flex items-center gap-4">
-            <Badge className="bg-white text-blue-600 px-3 py-1 font-medium flex-shrink-0 shadow-lg">
-
+            <Badge className="bg-white text-blue-600 px-3 py-1 font-medium flex-shrink-0 shadow-md">
+              <span className="animate-pulse">●</span>
               <span className="ml-1">HOT NEWS</span>
             </Badge>
-            <div className="relative flex-1 overflow-hidden text-white border-b border-cyan-400">
-              {/* Track wrapper */}
-              <div className="flex whitespace-nowrap">
-                {/* Track 1 */}
-                <div className="flex gap-12 animate-marquee will-change-transform">
-                  {breakingNews.map((news, i) => (
-                    <span
-                      key={`t1-${i}`}
-                      className="cursor-pointer hover:text-cyan-300 transition-colors"
-                    >
-                      {news}
-                    </span>
-                  ))}
-                  {/* nhân đôi để đủ chiều dài */}
-                  {breakingNews.map((news, i) => (
-                    <span
-                      key={`t1c-${i}`}
-                      className="cursor-pointer hover:text-cyan-300 transition-colors"
-                    >
-                      {news}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Track 2 (duplicate, offset for seamless loop) */}
-                <div className="flex gap-12 animate-marquee animate-marquee-delay will-change-transform" aria-hidden="true">
-                  {breakingNews.map((news, i) => (
-                    <span
-                      key={`t2-${i}`}
-                      className="cursor-pointer hover:text-cyan-300 transition-colors"
-                    >
-                      {news}
-                    </span>
-                  ))}
-                  {breakingNews.map((news, i) => (
-                    <span
-                      key={`t2c-${i}`}
-                      className="cursor-pointer hover:text-cyan-300 transition-colors"
-                    >
-                      {news}
-                    </span>
-                  ))}
-                </div>
+            <div className="flex-1 overflow-hidden">
+              <div className="flex animate-marquee">
+                {breakingNews.map((news, index) => (
+                  <span
+                    key={index}
+                    className="mr-12 whitespace-nowrap cursor-pointer hover:text-cyan-200 transition-colors"
+                  >
+                    {news}
+                  </span>
+                ))}
               </div>
             </div>
-
           </div>
         </div>
       </div>
 
-      <header className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
-        <div className="container mx-auto px-4 w-full ">
-          {/* Top bar - Enhanced */}
-          <div className="flex items-center justify-between py-4">
-            {/* Logo and Brand - Enhanced */}
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 rounded-lg flex items-center justify-center shadow-xl">
-                    <span className="text-white font-bold text-lg">24H</span>
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-slate-800 animate-pulse"></div>
+      <div className="container mx-auto px-4">
+        {/* Top bar - Enhanced */}
+        <div className="flex items-center justify-between py-4 border-b border-gray-600/30">
+          {/* Logo and Brand - Enhanced */}
+          <Link
+            href={"/"}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-lg">24H</span>
                 </div>
-                <div>
-                  <Link href="/" className="inline-block">
-                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent hidden sm:flex sm:items-center">
-                      TOGOGO ANALYTICS
-                    </div>
-                  </Link>
-
-                  <div className="text-xs text-slate-400  sm:items-center gap-2 hidden sm:flex ">
-                    <span>Tin tức & Phân tích tài chính</span>
-                    <Badge variant="outline" className="text-xs px-1 py-0 text-emerald-400 border-emerald-400/50 bg-emerald-400/10">
-                      Live
-                    </Badge>
-                  </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-gray-900 animate-pulse"></div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-white">
+                  CHỨNG KHOÁN 24H
+                </div>
+                <div className="text-xs text-gray-400 flex items-center gap-2">
+                  <span>Tin tức & Phân tích tài chính</span>
+                  <Badge
+                    variant="outline"
+                    className="text-xs px-1 py-0 text-emerald-400 border-emerald-400/50 bg-emerald-400/10"
+                  >
+                    Live
+                  </Badge>
                 </div>
               </div>
             </div>
+          </Link>
 
-            {/* Right side - Enhanced */}
-            <div className="flex items-center space-x-4">
-              {/* Market Summary - Enhanced */}
-              <div className="hidden lg:flex items-center space-x-6 text-sm"> 
-                <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg border border-blue-400/20">
-                  <Calendar className="w-4 h-4 text-cyan-400" />
-                  <span className="text-slate-300 capitalize">{formatted}</span>
-                </div>
-                <div className="text-slate-600">|</div>
-                <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg border border-emerald-400/30">
-                  <TrendingUp className="w-4 h-4 text-emerald-400" />
-                  <div>
-                    <span className="text-emerald-300 font-medium">VN-Index: 1,278.45</span>
-                    <span className="text-emerald-400 ml-2">(+0.97%)</span>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg border border-blue-400/30">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                  <span className="text-blue-300 text-xs">Phiên ATC</span>
+          {/* Right side - Enhanced */}
+          <div className="flex items-center space-x-4">
+            {/* Market Summary - Enhanced */}
+            <div className="hidden lg:flex items-center space-x-6 text-sm">
+              <div className="flex items-center space-x-2 px-3 py-2 bg-gray-800/60 rounded-lg border border-gray-600/40">
+                <Calendar className="w-4 h-4 text-gray-400" />
+                <span className="text-gray-300">Thứ 7, 23/08/2025</span>
+              </div>
+              <div className="text-gray-600">|</div>
+              <div className="flex items-center space-x-2 px-3 py-2 bg-emerald-500/10 rounded-lg border border-emerald-400/30">
+                <TrendingUp className="w-4 h-4 text-emerald-400" />
+                <div>
+                  <span className="text-emerald-300 font-medium">
+                    VN-Index: 1,278.45
+                  </span>
+                  <span className="text-emerald-400 ml-2">(+0.97%)</span>
                 </div>
               </div>
+              <div className="flex items-center space-x-2 px-3 py-2 bg-blue-500/10 rounded-lg border border-blue-400/30">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                <span className="text-blue-300">Phiên ATC</span>
+              </div>
+            </div>
 
-              {/* Action buttons - Enhanced */}
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon" className="relative hover:bg-blue-500/20 text-slate-300 hover:text-white">
-                  <Bell className="w-4 h-4" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-full text-xs text-white flex items-center justify-center">
-                    3
-                  </div>
-                </Button>
-
-                <div className="relative inline-block text-left">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:bg-blue-500/20 text-slate-300 hover:text-white"
-                    onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  >
-                    <User className="w-4 h-4" />
-                    {/* <ChevronDown className="w-3 h-3 ml-1" /> */}
-                  </Button>
-                  {/* {userEmail && (
-                    <span className="ml-2 hidden md:inline text-xs text-slate-300 truncate max-w-[180px] align-middle">{userEmail}</span>
-                  )} */}
-
-                  {/* Profile Dropdown - Enhanced */}
-                  {isProfileMenuOpen && (
-
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-gradient-to-br from-slate-800 to-slate-700 border border-blue-400/30 rounded-lg shadow-xl py-2 z-50 backdrop-blur-sm">
-                      <Link
-                        href="/login"
-                        className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors"
-                      >
-                        Đăng nhập
-                      </Link>
-                      <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Đăng ký</a>
-                      <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Cài đặt</a>
-                      <a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">Trợ giúp</a>
-                      {/* {userEmail && (<a href="#" className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors">{userEmail}</a>)} */}
-                    </div>
-                  )}
-
+            {/* Action buttons - Enhanced */}
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative hover:bg-gray-700/50 text-gray-300 hover:text-white"
+              >
+                <Bell className="w-4 h-4" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
+                  3
                 </div>
+              </Button>
 
-                {/* Mobile menu button - Enhanced */}
+              <div className="relative">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden hover:bg-blue-500/20 text-slate-300 hover:text-white"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="hover:bg-gray-700/50 text-gray-300 hover:text-white"
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 >
-                  {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                  <User className="w-4 h-4" />
+                  <ChevronDown className="w-3 h-3 ml-1" />
                 </Button>
-              </div>
-            </div>
-          </div>
 
-          {/* Desktop Navigation - Enhanced Search Bar */}
-          <div className="hidden md:block py-4">
-            <div className="max-w-4xl mx-auto">
-              {/* Search Bar with Filter Tabs - Enhanced */}
-              <div className="bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-2xl p-1 shadow-inner border border-blue-400/20 backdrop-blur-sm">
-                <div className="flex items-center">
-                  {/* Filter Tabs - Enhanced */}
-                  <div className="flex bg-gradient-to-r from-slate-800/60 to-slate-700/60 rounded-xl shadow-sm mr-3 border border-blue-400/20">
-                    {searchFilters.map((filter) => (
-                      <button
-                        key={filter.label}
-                        onClick={() => setActiveSearchFilter(filter.label)}
-                        className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl ${activeSearchFilter === filter.label
-                          ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-sm'
-                          : 'text-slate-300 hover:text-white hover:bg-blue-500/20'
-                          }`}
-                      >
-                        {filter.icon}
-                        <span>{filter.label}</span>
-                      </button>
-                    ))}
+                {/* Profile Dropdown - Enhanced */}
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-gradient-to-br from-slate-800 to-slate-700 border border-blue-400/30 rounded-lg shadow-xl py-2 z-50 backdrop-blur-sm">
+                    {/* <div className="px-4 py-2 border-b border-blue-400/20">
+                      <div className="text-sm font-medium text-white">
+                        Tài khoản
+                      </div>
+                      <div className="text-xs text-slate-400">
+                        guest@24h.com.vn
+                      </div>
+                    </div> */}
+                    <Link
+                      href={"/login"}
+                      className="block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors"
+                    >
+                      Đăng nhập
+                    </Link>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors"
+                    >
+                      Đăng ký
+                    </a>
+                    {/* <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors"
+                    >
+                      Cài đặt
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-slate-300 hover:bg-blue-500/20 hover:text-white transition-colors"
+                    >
+                      Trợ giúp
+                    </a> */}
                   </div>
-
-                  {/* Search Input - Enhanced */}
-                  <form onSubmit={handleSearch} className="flex-1 relative">
-                    <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                    <Input
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder={`Tìm kiếm ${activeSearchFilter.toLowerCase()}... (VD: YTC, HPG, tin tức ngân hàng)`}
-                      className="pl-12 pr-20 py-3 text-base bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-0 rounded-xl shadow-sm focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-0 transition-all text-white placeholder-slate-400"
-                    />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs px-2 py-1 text-slate-400 bg-slate-600/50 border-slate-500">
-                        ⌘K
-                      </Badge>
-                      <Button
-                        type="submit"
-                        size="sm"
-                        className="px-3 py-1.5 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
-                      >
-                        Tìm
-                      </Button>
-                    </div>
-                  </form>
-                </div>
+                )}
               </div>
 
-              {/* Search Suggestions - Enhanced */}
-              {searchQuery && (
-                <div className="mt-2 bg-gradient-to-br from-slate-800/90 to-slate-700/90 rounded-lg shadow-xl border border-blue-400/30 py-2 max-w-4xl mx-auto backdrop-blur-sm">
-                  <div className="px-4 py-2 text-xs text-slate-400 border-b border-blue-400/20">
-                    Gợi ý tìm kiếm trong "{activeSearchFilter}"
-                  </div>
-                  <div className="space-y-1">
-                    {activeSearchFilter === "Tổng quan" && (
-                      <>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <BarChart3 className="w-4 h-4 text-blue-400" />
-                          <span className="text-sm text-slate-300">YTC - Vietcombank</span>
-                          <span className="text-xs text-slate-500 ml-auto">Cổ phiếu</span>
-                        </div>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <BarChart3 className="w-4 h-4 text-emerald-400" />
-                          <span className="text-sm text-slate-300">HPG - Hoa Phat Group</span>
-                          <span className="text-xs text-slate-500 ml-auto">Cổ phiếu</span>
-                        </div>
-                      </>
-                    )}
-                    {activeSearchFilter === "Kỹ thuật" && (
-                      <>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <TrendingUp className="w-4 h-4 text-blue-400" />
-                          <span className="text-sm text-slate-300">Phân tích kỹ thuật VN-Index</span>
-                          <span className="text-xs text-slate-500 ml-auto">Báo cáo</span>
-                        </div>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <TrendingUp className="w-4 h-4 text-emerald-400" />
-                          <span className="text-sm text-slate-300">Đường MA và RSI</span>
-                          <span className="text-xs text-slate-500 ml-auto">Chỉ báo</span>
-                        </div>
-                      </>
-                    )}
-                    {activeSearchFilter === "Tin tức" && (
-                      <>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <Newspaper className="w-4 h-4 text-cyan-400" />
-                          <span className="text-sm text-slate-300">Tin tức ngân hàng mới nhất</span>
-                          <span className="text-xs text-slate-500 ml-auto">Bài viết</span>
-                        </div>
-                        <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
-                          <Newspaper className="w-4 h-4 text-teal-400" />
-                          <span className="text-sm text-slate-300">Chính sách mới từ SBV</span>
-                          <span className="text-xs text-slate-500 ml-auto">Tin tức</span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              )}
+              {/* Mobile menu button - Enhanced */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden hover:bg-blue-500/20 text-slate-300 hover:text-white"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-4 h-4" />
+                ) : (
+                  <Menu className="w-4 h-4" />
+                )}
+              </Button>
             </div>
           </div>
+        </div>
 
-          {/* Mobile Navigation - Enhanced */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-blue-400/20">
-              {/* Mobile Search with Filters - Enhanced */}
-              <div className="mb-4">
-                {/* Mobile Filter Tabs - Enhanced */}
-                <div className="flex mb-3 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg p-1 border border-blue-400/20">
+        {/* Desktop Navigation - Enhanced Search Bar */}
+        <div className="hidden md:block py-4">
+          <div className="max-w-4xl mx-auto">
+            {/* Search Bar with Filter Tabs - Enhanced */}
+            <div className="bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-2xl p-1 shadow-inner border border-blue-400/20 backdrop-blur-sm">
+              <div className="flex items-center">
+                {/* Filter Tabs - Enhanced */}
+                <div className="flex bg-gradient-to-r from-slate-800/60 to-slate-700/60 rounded-xl shadow-sm mr-3 border border-blue-400/20">
                   {searchFilters.map((filter) => (
                     <button
                       key={filter.label}
                       onClick={() => setActiveSearchFilter(filter.label)}
-                      className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-all rounded-md ${activeSearchFilter === filter.label
-                        ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-sm'
-                        : 'text-slate-300'
-                        }`}
+                      className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl ${
+                        activeSearchFilter === filter.label
+                          ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-sm"
+                          : "text-slate-300 hover:text-white hover:bg-blue-500/20"
+                      }`}
                     >
                       {filter.icon}
                       <span>{filter.label}</span>
@@ -422,74 +313,202 @@ export function Header() {
                   ))}
                 </div>
 
-                {/* Mobile Search Input - Enhanced */}
-                <div className="relative">
-                  <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                {/* Search Input - Enhanced */}
+                <form onSubmit={handleSearch} className="flex-1 relative">
+                  <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={`Tìm ${activeSearchFilter.toLowerCase()}...`}
-                    className="pl-10 pr-12 bg-gradient-to-r from-slate-700/50 to-slate-600/50 border-blue-400/20 text-white placeholder-slate-400"
+                    placeholder={`Tìm kiếm ${activeSearchFilter.toLowerCase()}... (VD: VCB, HPG, tin tức ngân hàng)`}
+                    className="pl-12 pr-20 py-3 text-base bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-0 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-0 transition-all text-white placeholder-slate-400"
                   />
-                  <Button
-                    size="sm"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 px-2 py-1 text-xs bg-gradient-to-r from-blue-500 to-cyan-500"
-                  >
-                    Tìm
-                  </Button>
-                </div>
-              </div>
-
-              {/* Mobile Market Info - Enhanced */}
-              <div className="mb-4 p-3 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg border border-blue-400/20">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-emerald-400" />
-                    <span className="text-slate-300">VN-Index: 1,278.45</span>
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-1 text-slate-400 bg-slate-600/50 border-slate-500"
+                    >
+                      ⌘K
+                    </Badge>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="px-3 py-1.5 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
+                    >
+                      Tìm
+                    </Button>
                   </div>
-                  <span className="text-emerald-400 font-medium">+0.97%</span>
+                </form>
+              </div>
+            </div>
+
+            {/* Search Suggestions - Enhanced */}
+            {searchQuery && (
+              <div className="mt-2 bg-gradient-to-br from-slate-800/90 to-slate-700/90 rounded-lg shadow-xl border border-blue-400/30 py-2 max-w-4xl mx-auto backdrop-blur-sm">
+                <div className="px-4 py-2 text-xs text-slate-400 border-b border-blue-400/20">
+                  Gợi ý tìm kiếm trong &quot;{activeSearchFilter}&quot;
+                </div>
+                <div className="space-y-1">
+                  {activeSearchFilter === "Tổng quan" && (
+                    <>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <BarChart3 className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm text-slate-300">
+                          VCB - Vietcombank
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Cổ phiếu
+                        </span>
+                      </div>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <BarChart3 className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm text-slate-300">
+                          HPG - Hoa Phat Group
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Cổ phiếu
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {activeSearchFilter === "Kỹ thuật" && (
+                    <>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <TrendingUp className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm text-slate-300">
+                          Phân tích kỹ thuật VN-Index
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Báo cáo
+                        </span>
+                      </div>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <TrendingUp className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm text-slate-300">
+                          Đường MA và RSI
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Chỉ báo
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {activeSearchFilter === "Tin tức" && (
+                    <>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <Newspaper className="w-4 h-4 text-cyan-400" />
+                        <span className="text-sm text-slate-300">
+                          Tin tức ngân hàng mới nhất
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Bài viết
+                        </span>
+                      </div>
+                      <div className="px-4 py-2 hover:bg-blue-500/20 cursor-pointer flex items-center gap-3 transition-colors">
+                        <Newspaper className="w-4 h-4 text-teal-400" />
+                        <span className="text-sm text-slate-300">
+                          Chính sách mới từ SBV
+                        </span>
+                        <span className="text-xs text-slate-500 ml-auto">
+                          Tin tức
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
+            )}
+          </div>
+        </div>
 
-              {/* Mobile Menu Items - Enhanced */}
-              <div className="space-y-2">
-                {navigationItems.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${item.isActive
-                      ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-cyan-300 font-medium border border-blue-400/30'
-                      : 'text-slate-300 hover:bg-blue-500/20 hover:text-white'
-                      }`}
+        {/* Mobile Navigation - Enhanced */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-blue-400/20">
+            {/* Mobile Search with Filters - Enhanced */}
+            <div className="mb-4">
+              {/* Mobile Filter Tabs - Enhanced */}
+              <div className="flex mb-3 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg p-1 border border-blue-400/20">
+                {searchFilters.map((filter) => (
+                  <button
+                    key={filter.label}
+                    onClick={() => setActiveSearchFilter(filter.label)}
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-all rounded-md ${
+                      activeSearchFilter === filter.label
+                        ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-sm"
+                        : "text-slate-300"
+                    }`}
                   >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </a>
+                    {filter.icon}
+                    <span>{filter.label}</span>
+                  </button>
                 ))}
               </div>
 
-              {/* Mobile Actions - Enhanced */}
-              <div className="mt-4 pt-4 border-t border-blue-400/20">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 header-mobile-date min-w-0">
-                    <Calendar className="w-4 h-4 flex-shrink-0" />
-                    <span className="mobile-date-short truncate max-w-[60vw] leading-none">25/08/2025</span>
-                    <span>Thứ 2, 25/08/2025</span>
-                  </div>
-                  <Badge variant="outline" className="text-cyan-400 border-cyan-400/50 bg-cyan-400/10">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-1"></div>
-                    Phiên ATC
-                  </Badge>
-                </div>
+              {/* Mobile Search Input - Enhanced */}
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                <Input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={`Tìm ${activeSearchFilter.toLowerCase()}...`}
+                  className="pl-10 pr-12 bg-gradient-to-r from-slate-700/50 to-slate-600/50 border-blue-400/20 text-white placeholder-slate-400"
+                />
+                <Button
+                  size="sm"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 px-2 py-1 text-xs bg-gradient-to-r from-blue-500 to-cyan-500"
+                >
+                  Tìm
+                </Button>
               </div>
             </div>
-          )}
-        </div>
-      </header>
+
+            {/* Mobile Market Info - Enhanced */}
+            <div className="mb-4 p-3 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-lg border border-blue-400/20">
+              <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-emerald-400" />
+                  <span className="text-slate-300">VN-Index: 1,278.45</span>
+                </div>
+                <span className="text-emerald-400 font-medium">+0.97%</span>
+              </div>
+            </div>
+
+            {/* Mobile Menu Items - Enhanced */}
+            <div className="space-y-2">
+              {navigationItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                    item.isActive
+                      ? "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-cyan-300 font-medium border border-blue-400/30"
+                      : "text-slate-300 hover:bg-blue-500/20 hover:text-white"
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </a>
+              ))}
+            </div>
+
+            {/* Mobile Actions - Enhanced */}
+            <div className="mt-4 pt-4 border-t border-blue-400/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-slate-400">
+                  <Calendar className="w-4 h-4" />
+                  <span>Thứ 2, 25/08/2025</span>
+                </div>
+                <Badge
+                  variant="outline"
+                  className="text-cyan-400 border-cyan-400/50 bg-cyan-400/10"
+                >
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-1"></div>
+                  Phiên ATC
+                </Badge>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
-
-
-
-

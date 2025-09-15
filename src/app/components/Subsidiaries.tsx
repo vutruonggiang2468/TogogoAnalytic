@@ -26,7 +26,7 @@ export function Subsidiaries({ subsidiaries }: SubsidiariesProps) {
                 <div key={index} className="p-5 bg-slate-700/30 backdrop-blur-sm rounded-xl border border-indigo-400/20">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h5 className="font-bold text-white mb-1">{subsidiary.name}</h5>
+                      <h5 className="font-bold text-white mb-1 text-base">{subsidiary.name}</h5>
                       <div className="text-sm text-slate-400 mb-2">{subsidiary.business}</div>
                     </div>
                     <Badge className={`${subsidiary.status === 'Hoạt động' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-400/50' : 'bg-red-500/20 text-red-400 border-red-400/50'} border`}>
@@ -34,7 +34,7 @@ export function Subsidiaries({ subsidiaries }: SubsidiariesProps) {
                     </Badge>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="grid grid-cols-2 gap-4 text-base">
                     <div>
                       <span className="text-slate-400">Sở hữu:</span>
                       <div className="font-semibold text-indigo-400">{subsidiary.ownership}</div>
