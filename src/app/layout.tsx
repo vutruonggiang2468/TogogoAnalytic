@@ -4,7 +4,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/app/components/Header";
-import Breadcrumb from "@/app/components/Breadcrumb";
 import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
@@ -578,10 +577,6 @@ export default function RootLayout({
 
           {/* Header */}
           {!isLoginPage && <Header />}
-          {/* Global breadcrumb (hidden on homepage) */}
-          <div className="relative z-10">
-            <Breadcrumb />
-          </div>
           <div className="relative z-10">{children}</div>
         </div>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import {
@@ -10,16 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import {
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Filter,
-  BarChart3,
-  ChevronDown,
-} from "lucide-react";
-import dynamic from "next/dynamic";
-const EventChart = dynamic(() => import("./EventChart"), {
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+const EconomicBarChart = dynamic(() => import("./EconomicBarChart"), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-full text-slate-400 text-sm">
@@ -315,37 +308,15 @@ export function EconomicCalendar() {
 
   // Expandable event details state: allow multiple open
   const [expandedIds, setExpandedIds] = useState<Set<number>>(new Set());
-  // Delay-mount charts to avoid jank during open animation
-  const [chartMountedIds, setChartMountedIds] = useState<Set<number>>(new Set());
   const toggleExpand = (id: number) => {
     setExpandedIds((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-        setChartMountedIds((mounted) => {
-          const m = new Set(mounted);
-          m.delete(id);
-          return m;
-        });
-      } else {
-        next.add(id);
-        // delay mount chart slightly for smoother transition
-        setTimeout(() => {
-          setChartMountedIds((mounted) => {
-            const m = new Set(mounted);
-            m.add(id);
-            return m;
-          });
-        }, 160);
-      }
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
-
-  const prefetchChart = () => {
-    // warm up dynamic import on hover
-    import("./EventChart");
-  };
+  // No prefetching needed for placeholder chart
 
   return (
     <Card className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 border border-cyan-400/30 backdrop-blur-sm shadow-lg">
@@ -553,7 +524,6 @@ export function EconomicCalendar() {
                     key={event.id}
                     className="border-b border-blue-400/10 hover:bg-slate-600/20 transition-colors cursor-pointer"
                     onClick={() => toggleExpand(event.id)}
-                    onMouseEnter={prefetchChart}
                   >
                     <TableCell className="text-slate-300 text-base py-4 pl-4 align-top">
                       {event.time}
@@ -608,32 +578,81 @@ export function EconomicCalendar() {
                   <TableRow className="border-b border-blue-400/10">
                     <TableCell colSpan={6} className="p-0">
                       <div
-                        className={`overflow-hidden transform-gpu will-change-transform origin-top transition-[opacity,transform] duration-250 ease-out ${
+                        className={`overflow-hidden transition-all duration-300 ease-out ${
                           expandedIds.has(event.id)
-                            ? "opacity-100 scale-y-100 pointer-events-auto"
-                            : "opacity-0 scale-y-0 pointer-events-none"
+                            ? "max-h-[28rem] opacity-100"
+                            : "max-h-0 opacity-0"
                         }`}
                       >
-                        <div className="p-4 bg-slate-700/30">
+                        <div
+                          className={`p-4 bg-slate-700/30 transform transition-transform duration-300 ${
+                            expandedIds.has(event.id)
+                              ? "translate-y-0"
+                              : "-translate-y-2"
+                          }`}
+                        >
                           <div className="text-slate-300 text-sm mb-3">
                             {event.description ||
                               "Đánh giá ngắn về bối cảnh sự kiện."}
                           </div>
                           <div className="relative bg-slate-800/40 border border-blue-400/20 rounded-md p-3 h-64">
-                            {chartMountedIds.has(event.id) && (() => {
-                              const series = event.series && event.series.length > 0 ? event.series : [
-                                { label: "Dec 2024", value: 65 },
-                                { label: "Jan 2025", value: 80 },
-                                { label: "Feb 2025", value: 72 },
-                                { label: "Mar 2025", value: 78 },
-                                { label: "Apr 2025", value: 81 },
-                                { label: "May 2025", value: 79 },
-                                { label: "Jul 2025", value: 82 },
-                                { label: "Aug 2025", value: 83 },
-                              ];
-                              const data = series.slice(Math.max(0, series.length - 12));
-                              return <EventChart series={data} />;
-                            })()}
+                            {expandedIds.has(event.id) &&
+                              (() => {
+                                const series =
+                                  event.series && event.series.length > 0
+                                    ? event.series
+                                    : [
+                                        {
+                                          label: "thg 1 2025",
+                                          actual: 0.01,
+                                          forecast: 0.02,
+                                        },
+                                        {
+                                          label: "thg 2 2025",
+                                          actual: 0.26,
+                                          forecast: 0.18,
+                                        },
+                                        {
+                                          label: "thg 3 2025",
+                                          actual: 0.15,
+                                          forecast: 0.16,
+                                        },
+                                        {
+                                          label: "thg 4 2025",
+                                          actual: 0.28,
+                                          forecast: 0.2,
+                                        },
+                                        {
+                                          label: "thg 5 2025",
+                                          actual: 0.27,
+                                          forecast: 0.19,
+                                        },
+                                        {
+                                          label: "thg 6 2025",
+                                          actual: 0.08,
+                                          forecast: 0.18,
+                                        },
+                                        {
+                                          label: "thg 7 2025",
+                                          actual: 0.19,
+                                          forecast: 0.19,
+                                        },
+                                        {
+                                          label: "thg 8 2025",
+                                          actual: 0.01,
+                                          forecast: 0.12,
+                                        },
+                                        {
+                                          label: "thg 9 2025",
+                                          actual: null,
+                                          forecast: 0.09,
+                                        }, // chỉ dự báo
+                                      ];
+                                const data = series.slice(
+                                  Math.max(0, series.length - 12)
+                                );
+                                return <EconomicBarChart series={data} />;
+                              })()}
                             <div className="absolute right-3 top-3 text-xs text-slate-400">
                               Nguồn: {event.source || "Demo"}
                             </div>

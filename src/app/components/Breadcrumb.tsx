@@ -20,7 +20,7 @@ function formatSegment(seg: string) {
 
 export default function Breadcrumb() {
   const pathname = usePathname();
-  if (!pathname || pathname === "/") return null; // Hide on homepage
+  if (!pathname || pathname === "/" || pathname.includes("/login")) return null; // Hide on homepage & login
 
   const segments = pathname.split("/").filter(Boolean);
   const crumbs = segments.map((seg, idx) => {
@@ -60,4 +60,3 @@ export default function Breadcrumb() {
     </nav>
   );
 }
-

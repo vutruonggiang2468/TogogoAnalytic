@@ -1,13 +1,11 @@
-'use client'
+"use client";
 import Image from "next/image";
 import { useState } from "react";
 import { useEffect } from "react";
-// import { DetailedAnalysisPage } from "./viewdetails/components/DetailedAnalysisPage";
 import { Badge } from "./components/ui/badge";
 import { Card, CardContent } from "./components/ui/card";
-import { Header } from "./components/Header";
 import { DeepAnalysisPage } from "./components/DeepAnalysisPage";
-import { Clock, Eye, MessageCircle, Sparkles, TrendingDown, TrendingUp } from "lucide-react";
+import { BarChart, ChartColumnBig, Clock, Eye, Sparkles } from "lucide-react";
 import { NewsDetailPage } from "./components/NewDetailPage";
 import { QuickAnalysis } from "./components/QuickAnalysis";
 import { TogogoTradingBotCompact } from "./components/TogogoTradingBotCompact";
@@ -17,7 +15,9 @@ import { NewsSidebar } from "./components/NewsSidebar";
 import { DetailedAnalysisPage } from "./components/DetailedAnalysisPage";
 
 export default function Home() {
-  const [currentView, setCurrentView] = useState<"home" | "details" | "news-detail" | "deep-analysis">("home");
+  const [currentView, setCurrentView] = useState<
+    "home" | "details" | "news-detail" | "deep-analysis"
+  >("home");
   const [selectedStock, setSelectedStock] = useState<string>("");
   const [selectedArticle, setSelectedArticle] = useState<number>(1);
 
@@ -31,7 +31,7 @@ export default function Home() {
       setTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timer); 
+    return () => clearInterval(timer);
   }, []);
 
   const handleViewDetails = (stockCode: string) => {
@@ -75,324 +75,335 @@ export default function Home() {
   }
 
   if (currentView === "deep-analysis") {
-    return (
-      <DeepAnalysisPage
-        onBack={handleBackToHome}
-      />
-    );
+    return <DeepAnalysisPage onBack={handleBackToHome} />;
   }
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0E1B36' }}>
-      {/* Header */}
-      <Header />
-
+    <div className="min-h-screen">
       {/* Add top padding to account for fixed header (smaller on mobile) */}
-      <div className="pt-16 md:pt-32">
-        <div className="container mx-auto px-4 py-6 max-w-7xl">
-          {/* Deep Analysis CTA Section - Enhanced with unified colors */}
-          <Card className="mb-8 shadow-2xl bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-2 border-blue-500/30 backdrop-blur-sm relative overflow-hidden">
-            {/* Animated background effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-cyan-600/10 to-teal-600/10 animate-pulse"></div>
-
-          </Card>
-
+      <div className="pt-32 relative z-10">
+        <div className="container mx-auto px-4 py-4 max-w-7xl">
           {/* Quick Analysis Section - Enhanced */}
-          <Card className="mb-8 shadow-lg bg-gradient-to-r from-slate-800/40 to-slate-700/40 border border-blue-400/30 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-wrap items-start justify-between gap-2 mb-6">
+          <Card className="mb-4 shadow-xl bg-gray-900/80 border border-gray-600/30 backdrop-blur-md relative overflow-hidden">
+            {/* Card decorative pattern */}
+            <div className="absolute inset-0 pattern-gentle-dots opacity-70 pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-400/15 via-blue-400/8 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-emerald-400/10 to-transparent rounded-full blur-xl"></div>
+            <CardContent className="p-4 mt-18 relative z-10">
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-8 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full"></div>
-                  <h2 className="text-2xl font-bold text-white">PHÂN TÍCH NHANH</h2>
-                  {/* <Badge variant="outline" className="ml-3 text-cyan-400 border-cyan-400/50 bg-cyan-400/10 px-3 py-1 whitespace-normal flex-wrap items-start leading-tight text-left max-w-[96px] shrink sm:whitespace-nowrap sm:flex-nowrap sm:max-w-none">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-2 mt-0.5 sm:mt-0"></div>
-                    Cập nhật liên tục
-                  </Badge> */}
+                  <div className="w-1.5 h-6 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full"></div>
+                  <h2 className="text-2xl font-bold text-white">
+                    PHÂN TÍCH NHANH
+                  </h2>
                   <Badge
                     variant="outline"
-                    className="ml-3 text-cyan-400 border-cyan-400/50 bg-cyan-400/10 px-3 py-1 flex items-center leading-tight"
+                    className="ml-3 text-blue-300 border-blue-500/50 bg-blue-500/10 px-2 py-1 text-xs"
                   >
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-2"></div>
-                    Cập nhật liên tục
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse mr-1"></div>
+                    Live
                   </Badge>
-
                 </div>
-                <div className="text-sm text-slate-400 w-full sm:w-auto mt-2 sm:mt-0">
-                  Cập nhật lần cuối: {formattedTime} hôm nay
+                <div className="text-xs text-gray-400 bg-gray-800/60 px-2 py-1 rounded">
+                  14:32
                 </div>
               </div>
-              <QuickAnalysis onViewDetails={handleViewDetails} />
+              <QuickAnalysis />
             </CardContent>
           </Card>
 
           {/* Trading Bot Suggestions Section - Enhanced */}
-          <Card className="mb-8 shadow-lg bg-gradient-to-r from-slate-800/40 to-slate-700/40 border border-teal-400/30 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-1.5 h-8 bg-gradient-to-b from-teal-400 to-cyan-500 rounded-full"></div>
-                <h2 className="text-2xl font-bold text-white">GỢI Ý TRADING BOT</h2>
-                <Badge variant="outline" className="ml-3 text-teal-400 border-teal-400/50 bg-teal-400/10 px-3 py-1">
-                  <Sparkles className="w-3 h-3 mr-2" />
+          <Card className="mb-4 shadow-xl bg-gray-900/80 border border-gray-600/30 backdrop-blur-md relative overflow-hidden">
+            {/* Card decorative pattern */}
+            <div className="absolute inset-0 pattern-waves opacity-80 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-emerald-400/18 via-emerald-400/10 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-purple-400/12 to-transparent rounded-full blur-xl"></div>
+            <CardContent className="p-4 relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-1.5 h-6 bg-gradient-to-b from-emerald-400 to-emerald-600 rounded-full"></div>
+                <h2 className="text-2xl font-bold text-white">
+                  GỢI Ý TRADING BOT
+                </h2>
+                <Badge
+                  variant="outline"
+                  className="ml-3 text-emerald-300 border-emerald-500/50 bg-emerald-500/10 px-2 py-1 text-xs"
+                >
+                  <Sparkles className="w-3 h-3 mr-1 text-yellow-400" />
                   AI v2.1
                 </Badge>
               </div>
-              <TogogoTradingBotCompact onViewDetails={handleViewDetails} />
+              <TogogoTradingBotCompact />
             </CardContent>
           </Card>
 
           {/* Economic Calendar Section - New */}
-          <div className="mb-8">
+          <div className="mb-4">
             <EconomicCalendar />
           </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Grid - 3:1 Layout */}
+          <div className="flex items-center gap-2 mb-6 mt-12">
+            <div className="w-1.5 h-8 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full"></div>
+            <h2 className="text-2xl font-bold text-white">
+              TIN TỨC THEO CHUYÊN MỤC
+            </h2>
+            <Badge
+              variant="outline"
+              className="ml-3 text-cyan-400 border-cyan-400/50 bg-cyan-400/10 px-3 py-1"
+            >
+              Đa dạng
+            </Badge>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
             {/* Main Content Area - 3 columns */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 space-y-4">
+              {/* News Columns */}
+
               <NewsColumns onViewNews={handleViewNews} />
 
-              {/* Layout theo wireframe - Enhanced with unified colors */}
-              <div className="mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Left column - spans 2 columns */}
-                  <div className="lg:col-span-2 space-y-6">
-                    {/* Tin tức mới nhất - Enhanced */}
-                    <Card className="border border-blue-400/20 bg-gradient-to-br from-slate-800/40 to-slate-700/40 backdrop-blur-sm shadow-lg">
-                      <CardContent className="p-6">
-                        <div className="flex items-center gap-3 mb-6">
-                          <div className="w-1.5 h-8 bg-gradient-to-b from-sky-400 to-blue-500 rounded-full"></div>
-                          <h3 className="text-xl font-bold text-white">Tin tức mới nhất</h3>
-                          <Badge className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-3 py-1 text-xs">
-                            Live
-                          </Badge>
-                        </div>
+              {/* Latest News Section */}
+              <Card className="border border-gray-600/30 bg-gray-900/80 backdrop-blur-md shadow-xl relative overflow-hidden">
+                {/* Card decorative pattern */}
+                <div className="absolute inset-0 pattern-organic opacity-75 pointer-events-none"></div>
+                <div className="absolute top-4 left-4 w-32 h-32 bg-gradient-to-br from-blue-400/12 via-purple-400/8 to-transparent rounded-full blur-2xl"></div>
+                <div className="absolute bottom-4 right-4 w-24 h-24 bg-gradient-to-tl from-emerald-400/10 to-transparent rounded-full blur-xl"></div>
+                <CardContent className="p-4 relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-1.5 h-10 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full"></div>
+                    <h3 className="font-bold text-2xl text-white">
+                      Tin tức mới nhất
+                    </h3>
+                    <Badge className="bg-blue-500/20 border-blue-500/50 text-blue-300 px-2 py-1 text-xs">
+                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse mr-1"></div>
+                      Live
+                    </Badge>
+                  </div>
 
-                        {/* Featured news items - Enhanced */}
-                        <div className="space-y-4">
-                          <div className="p-5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-xl border border-blue-400/20 hover:border-blue-400/40 cursor-pointer transition-all duration-300 hover:shadow-lg">
-                            <div className="flex items-start gap-4">
-                              <div className="w-3 h-3 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
-                              <div className="flex-1">
-                                <h4 className="font-semibold mb-3 text-white text-lg leading-tight">VN-Index vượt mốc 1,280 điểm trong phiên chiều với thanh khoản cao</h4>
-                                <div className="flex items-center gap-6 text-sm text-slate-400">
-                                  <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4 text-cyan-400" />
-                                    <span>2 giờ trước</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <Eye className="w-4 h-4 text-blue-400" />
-                                    <span>12.5K</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <MessageCircle className="w-4 h-4 text-teal-400" />
-                                    <span>89</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="p-5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-xl border border-blue-400/20 hover:border-blue-400/40 cursor-pointer transition-all duration-300 hover:shadow-lg">
-                            <div className="flex items-start gap-4">
-                              <div className="w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
-                              <div className="flex-1">
-                                <h4 className="font-semibold mb-3 text-white text-lg leading-tight">Khối ngoại mua ròng 500 tỷ đồng, tập trung vào nhóm ngân hàng</h4>
-                                <div className="flex items-center gap-6 text-sm text-slate-400">
-                                  <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4 text-cyan-400" />
-                                    <span>3 giờ trước</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <Eye className="w-4 h-4 text-blue-400" />
-                                    <span>8.2K</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <MessageCircle className="w-4 h-4 text-teal-400" />
-                                    <span>56</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="p-5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded-xl border border-blue-400/20 hover:border-blue-400/40 cursor-pointer transition-all duration-300 hover:shadow-lg">
-                            <div className="flex items-start gap-4">
-                              <div className="w-3 h-3 bg-gradient-to-br from-blue-400 to-teal-500 rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
-                              <div className="flex-1">
-                                <h4 className="font-semibold mb-3 text-white text-lg leading-tight">HPG công bố kết quả kinh doanh Q4 vượt kỳ vọng</h4>
-                                <div className="flex items-center gap-6 text-sm text-slate-400">
-                                  <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4 text-cyan-400" />
-                                    <span>4 giờ trước</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <Eye className="w-4 h-4 text-blue-400" />
-                                    <span>6.1K</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <MessageCircle className="w-4 h-4 text-teal-400" />
-                                    <span>34</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Heading section - Enhanced */}
-                    <Card className="border border-teal-400/20 bg-gradient-to-br from-slate-800/40 to-slate-700/40 backdrop-blur-sm shadow-lg">
-                      <CardContent className="p-8">
-                        <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                          Market Insights
-                        </h3>
-                        <p className="text-slate-300 leading-relaxed text-lg">
-                          Thị trường chứng khoán Việt Nam đang cho thấy những dấu hiệu tích cực với sự phục hồi mạnh mẽ
-                          của các nhóm cổ phiếu lớn. Thanh khoản gia tăng và dòng tiền từ khối ngoại tiếp tục đổ vào
-                          thị trường tạo động lực tích cực cho xu hướng tăng trong các phiên giao dịch tới.
-                        </p>
-                        <div className="mt-6 p-4 bg-gradient-to-r from-blue-500/10 to-teal-500/10 rounded-lg border border-blue-400/20">
-                          <p className="text-cyan-300 text-sm">
-                            <strong>Điểm nhấn:</strong> VN-Index có thể thử thách vùng kháng cự 1,300 điểm trong tuần tới
-                            nếu duy trì được momentum hiện tại.
+                  {/* Grid layout for news items - 2 columns, 3 rows */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/8 via-transparent to-emerald-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-emerald-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0 animate-pulse"></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            VN-Index vượt mốc 1,280 điểm trong phiên chiều với
+                            thanh khoản cao
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            Chỉ số VN-Index tiếp tục đà tăng mạnh với thanh
+                            khoản đạt gần 15,000 tỷ đồng, được dẫn dắt bởi nhóm
+                            ngân hàng và bất động sản.
                           </p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Right column - spans 1 column - Enhanced */}
-                  <div className="lg:col-span-1 space-y-6">
-                    {/* Post card 1 - Enhanced */}
-                    <Card className="border border-cyan-400/20 bg-gradient-to-br from-slate-800/40 to-slate-700/40 backdrop-blur-sm shadow-lg">
-                      <CardContent className="p-6">
-                        <div className="text-center">
-                          <h4 className="font-semibold mb-4 text-white text-lg">Trending Stocks</h4>
-                          <div className="bg-gradient-to-br from-slate-700/40 to-slate-600/40 rounded-xl p-6 border border-blue-400/20">
-                            <div className="space-y-3">
-                              <div className="flex items-center justify-between">
-                                <span className="text-slate-300">YTC</span>
-                                <span className="text-emerald-400 font-semibold">+2.4%</span>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <span className="text-slate-300">TCB</span>
-                                <span className="text-emerald-400 font-semibold">+3.1%</span>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <span className="text-slate-300">HPG</span>
-                                <span className="text-emerald-400 font-semibold">+5.2%</span>
-                              </div>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>2h</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>12.5K</span>
                             </div>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
 
-                    {/* Post card 2 - Enhanced */}
-                    <Card className="border border-sky-400/20 bg-gradient-to-br from-slate-800/40 to-slate-700/40 backdrop-blur-sm shadow-lg">
-                      <CardContent className="p-6">
-                        <div className="text-center">
-                          <h4 className="font-semibold mb-4 text-white text-lg">Market Sentiment</h4>
-                          <div className="bg-gradient-to-br from-slate-700/40 to-slate-600/40 rounded-xl p-6 border border-sky-400/20">
-                            <div className="flex items-center justify-center mb-4">
-                              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center">
-                                <TrendingUp className="w-8 h-8 text-white" />
-                              </div>
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/8 via-transparent to-blue-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div
+                          className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0 animate-pulse"
+                          style={{ animationDelay: "0.5s" }}
+                        ></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            Khối ngoại mua ròng 500 tỷ đồng, tập trung vào nhóm
+                            ngân hàng
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            Dòng tiền từ khối ngoại tiếp tục đổ mạnh vào thị
+                            trường, VCB, TCB, BID là những mã được quan tâm
+                            nhất.
+                          </p>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>3h</span>
                             </div>
-                            <p className="text-emerald-400 font-semibold text-lg">Bullish</p>
-                            <p className="text-slate-400 text-sm mt-2">
-                              Tâm lý thị trường tích cực
-                            </p>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>8.2K</span>
+                            </div>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Sidebar - Enhanced with unified colors */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Compact Market Overview - Enhanced */}
-              <Card className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 border border-blue-400/30 backdrop-blur-sm shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-1.5 h-6 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full"></div>
-                    <h3 className="text-lg font-bold text-white">Tổng quan thị trường</h3>
-                  </div>
-
-                  {/* Key indices in enhanced format */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-blue-400/20">
-                      <div>
-                        <div className="text-base font-semibold text-white">VN-Index</div>
-                        <div className="text-sm text-slate-400">Chỉ số chung</div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-base font-bold text-white">1,278.45</div>
-                        <div className="text-sm text-emerald-400 flex items-center gap-1">
-                          <TrendingUp className="w-4 h-4" />
-                          +0.97%
+                    </div>
+
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/8 via-transparent to-purple-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute top-0 left-0 w-18 h-18 bg-gradient-to-br from-purple-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div
+                          className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0 animate-pulse"
+                          style={{ animationDelay: "1s" }}
+                        ></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            HPG công bố kết quả kinh doanh Q4 vượt kỳ vọng
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            Tập đoàn Hòa Phát ghi nhận doanh thu Q4/2024 đạt
+                            45,600 tỷ đồng, lợi nhuận vượt 15% so với dự báo.
+                          </p>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>4h</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>6.1K</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-blue-400/20">
-                      <div>
-                        <div className="text-base font-semibold text-white">HNX-Index</div>
-                        <div className="text-sm text-slate-400">Sàn HNX</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-base font-bold text-white">234.12</div>
-                        <div className="text-sm text-red-400 flex items-center gap-1">
-                          <TrendingDown className="w-4 h-4" />
-                          -0.79%
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-red-400/8 via-transparent to-red-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-red-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div
+                          className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0 animate-pulse"
+                          style={{ animationDelay: "1.5s" }}
+                        ></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            Fed cắt giảm lãi suất 0.25%, tác động tích cực đến
+                            TTCK Việt Nam
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            Quyết định của Fed giúp giảm áp lực lên USD, dự báo
+                            VN-Index có thể hướng tới 1,350 điểm.
+                          </p>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>5h</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>15.3K</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-blue-400/20">
-                      <div>
-                        <div className="text-base font-semibold text-white">Khối ngoại</div>
-                        <div className="text-sm text-slate-400">Giao dịch ròng</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-base font-bold text-emerald-400">+127B</div>
-                        <div className="text-sm text-emerald-400">Mua ròng</div>
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/8 via-transparent to-yellow-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-yellow-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div
+                          className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0 animate-pulse"
+                          style={{ animationDelay: "2s" }}
+                        ></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            Chính phủ công bố gói hỗ trợ phục hồi kinh tế
+                            120,000 tỷ đồng
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            Gói hỗ trợ tập trung vào hạ tầng, công nghệ và phát
+                            triển bền vững, kỳ vọng thúc đẩy tăng trưởng GDP
+                            2025.
+                          </p>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>6h</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>9.8K</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-blue-400/20">
-                      <div>
-                        <div className="text-base font-semibold text-white">Thanh khoản</div>
-                        <div className="text-sm text-slate-400">Tổng GTGD</div>
+                    <div className="p-4 bg-gray-800/60 rounded-lg border border-gray-600/40 hover:border-gray-500/60 cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-gray-800/80 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-orange-400/8 via-transparent to-orange-400/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute bottom-0 left-0 w-18 h-18 bg-gradient-to-tr from-orange-400/6 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="flex items-start gap-3 relative z-10">
+                        <div
+                          className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0 animate-pulse"
+                          style={{ animationDelay: "2.5s" }}
+                        ></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-lg mb-2 text-white leading-tight text-base hover:text-gray-100 transition-colors">
+                            Bitcoin tăng vượt $45,000, dòng tiền crypto ảnh
+                            hưởng CK công nghệ
+                          </h4>
+                          <p className="text-gray-300 text-base mb-3 leading-relaxed">
+                            FPT, CMG, VNG dự kiến hưởng lợi từ xu hướng phục hồi
+                            của thị trường cryptocurrency.
+                          </p>
+                          <div className="flex items-center gap-4 text-base text-gray-400">
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              <span>7h</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-3.5 h-3.5 text-gray-400" />
+                              <span>7.2K</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-base font-bold text-white">12,345B</div>
-                        <div className="text-sm text-cyan-400">+8.5%</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Market status indicator - Enhanced */}
-                  <div className="mt-6 p-4 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl border border-emerald-400/30">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-emerald-400">Trạng thái thị trường:</span>
-                      <Badge className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1">
-                        <div className="w-2 h-2 bg-emerald-300 rounded-full animate-pulse mr-2"></div>
-                        Mở cửa
-                      </Badge>
-                    </div>
-                    <div className="text-sm text-emerald-400/80">
-                      Phiên giao dịch • 14:32 (GMT+7)
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Continue with original NewsSidebar content */}
+              {/* Market Insights Section */}
+              <Card className="border border-gray-600/30 bg-gray-900/80 backdrop-blur-md shadow-xl relative overflow-hidden">
+                {/* Card decorative pattern */}
+                <div className="absolute inset-0 pattern-clouds opacity-90 pointer-events-none"></div>
+                <div className="absolute top-4 right-4 w-36 h-36 bg-gradient-to-br from-blue-400/15 to-purple-400/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-4 left-4 w-28 h-28 bg-gradient-to-tr from-emerald-400/12 to-transparent rounded-full blur-xl"></div>
+                <CardContent className="p-4 relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-1.5 h-10 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full"></div>
+                    <h3 className="font-bold text-2xl text-white">
+                      Market Insights
+                    </h3>
+                  </div>
+                  <p className="text-gray-300 leading-relaxed mb-3 text-base">
+                    Thị trường chứng khoán Việt Nam đang cho thấy những dấu hiệu
+                    tích cực với sự phục hồi mạnh mẽ của các nhóm cổ phiếu lớn.
+                    Thanh khoản gia tăng và dòng tiền từ khối ngoại tiếp tục đổ
+                    vào thị trường tạo động lực tích cực cho xu hướng tăng trong
+                    các phiên giao dịch tới.
+                  </p>
+                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/30">
+                    <p className="text-blue-200 text-sm">
+                      <ChartColumnBig className="inline-block w-5 h-5 mb-1 mr-2 text-white" />
+                      <strong className="text-white text-base mr-2 mb-1">
+                        Điểm nhấn:
+                      </strong>
+                      VN-Index có thể thử thách vùng kháng cự 1,300 điểm trong
+                      tuần tới nếu duy trì được momentum hiện tại.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Sidebar - NewsSidebar - 1 column */}
+            <div className="lg:col-span-1">
               <NewsSidebar onViewDetails={handleViewDetails} />
             </div>
           </div>
@@ -401,7 +412,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
